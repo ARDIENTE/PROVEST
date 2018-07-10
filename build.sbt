@@ -25,6 +25,11 @@ libraryDependencies ++= Seq(
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 )
 
+libraryDependencies ++= Seq(
+  "io.get-coursier" %% "coursier" % "1.0.3",
+  "io.get-coursier" %% "coursier-cache" % "1.0.3"
+)
+
 // Web Jars Dependencies
 libraryDependencies ++= Seq(
   "org.webjars" % "riot" % "2.6.5",
