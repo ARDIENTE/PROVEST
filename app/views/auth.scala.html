@@ -1,0 +1,14 @@
+@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@helper.base {
+  <link href="@routes.Assets.at("styles/auth.css")" rel="stylesheet">
+} {
+  <div id="content"  class="form-signin"></div>
+} {
+  <script>
+
+  </script>
+  <script src="@routes.Assets.at("scripts/app.js")"></script>
+  <script src="@routes.Assets.at("comps/auth/logo.js")"></script>
+  <script src="@routes.Assets.at("comps/auth/sign-in.js")"></script>
+  <script src="@routes.Assets.at("comps/auth/sign-up.js")"></script>
+}

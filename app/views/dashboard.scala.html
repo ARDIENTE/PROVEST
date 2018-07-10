@@ -1,0 +1,26 @@
+@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@helper.base {
+  <link href="@routes.Assets.at("styles/dashboard.css")" rel="stylesheet">
+} {
+  <div class="text-center main-dashboard">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <header></header>
+      </header>
+
+      <main role="main" class="inner cover">
+        <div id="content"></div>
+      </main>
+
+      <footer class="mastfoot mt-auto">
+        <footer></footer>
+      </footer>
+    </div>
+  </div>
+} {
+  <script src="@routes.Assets.at("comps/dashboard.js")"></script>
+  <script src="@routes.Assets.at("comps/dashboard/feature.js")"></script>
+  <script src="@routes.Assets.at("comps/dashboard/contact.js")"></script>
+  <script src="@routes.Assets.at("comps/dashboard/header-nav.js")"></script>
+  <script src="@routes.Assets.at("comps/dashboard/footer-nav.js")"></script>
+}
