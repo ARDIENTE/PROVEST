@@ -18,7 +18,7 @@ class HomeController @Inject() extends Controller {
    * a path of `/`.
    */
   def index = Action {
-    Ok(views.html.index("Home Controller Test!!!1"))
+    Ok(views.html.index("Home Controller Test!"))
   }
 
 }
