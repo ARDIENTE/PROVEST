@@ -34,6 +34,7 @@ libraryDependencies ++= Seq(
 libraryDependencies ++= Seq(
   "org.webjars" % "riot" % "2.6.5",
   "org.webjars" % "bootstrap" % "4.1.1",
+  "org.webjars" % "foundation" % "6.2.0",
   "org.webjars" % "webjars-play_2.11" % "2.5.0",
   "org.webjars" % "jquery" % "2.2.2",
   "org.webjars.bower" % "lodash" % "4.16.4",
