@@ -1,8 +1,24 @@
-@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@(
+    logoutUrl: Call
+  )(
+    implicit header: RequestHeader,
+    flash: Flash,
+    messages: Messages,
+    pm: PageMeta,
+    wja: WebJarAssets
+  )
+
 @helper.base {
   <link href="@routes.Assets.at("styles/main.css")" rel="stylesheet">
 } {
   <div id="content"></div>
+  <a href="#" onclick="logout('@logoutUrl')">logout</a>
 } {
   <script src="@routes.Assets.at("comps/main/main-page.js")"></script>
 }
+
+<script>
+  function logout(data) {
+    location.href=data;
+  }
+</script>

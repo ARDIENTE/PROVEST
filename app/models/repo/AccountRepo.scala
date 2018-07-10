@@ -19,8 +19,11 @@ class AccountRepo @Inject()(
   def exists(accountName: String): Future[Boolean] =
     db.run(dao.Query(accountName).exists.result)
 
-  def checkAccount[T >: String](accountName: T, password: T): Future[Boolean] =
-    db.run(dao.Query.map(r => r.accountName == accountName && r.password == password).exists.result)
+  def checkAccount(accountName: String, password: String): Future[Boolean] =
+    db.run(dao.Query.filter( account =>
+      account.accountName === accountName &&
+      account.password === password).exists.result
+    )
 
   def get: Future[Seq[Account]] =
     db.run(dao.Query.result)

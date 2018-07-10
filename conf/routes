@@ -18,6 +18,7 @@ GET   /auth/sign-up                       controllers.HomeController.auth
 GET   /auth/sign-in                       controllers.HomeController.auth
 POST  /auth/user/create                   controllers.HomeController.createUser
 POST  /auth/user/login                    controllers.HomeController.loginUser
+GET   /auth/logout                        controllers.HomeController.logout
 
 #main page
 

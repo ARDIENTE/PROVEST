@@ -14,7 +14,7 @@ class AccountService @Inject()(
   ) extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
 
-  def checkAccount[T >: String](name: T, pass: T): Future[Boolean] =
+  def checkAccount[T <: String](name: T, pass: T): Future[Boolean] =
     accountRepo.checkAccount(name, pass)
 
   def createAccount[T <: Account](acc: T): Future[Int] =

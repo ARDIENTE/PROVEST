@@ -1,4 +1,10 @@
-@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@()(
+  implicit header: RequestHeader,
+  messages: Messages,
+  pm: PageMeta,
+  wja: WebJarAssets
+)
+
 @helper.base {
   <link href="@routes.Assets.at("styles/dashboard.css")" rel="stylesheet">
 } {
