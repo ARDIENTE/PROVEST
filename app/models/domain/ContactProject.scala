@@ -5,7 +5,7 @@ import java.util.UUID
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-case class Contact(
+case class ContactProject(
     id: UUID,
     projectID: UUID,
     subProjectID: UUID,
@@ -14,10 +14,10 @@ case class Contact(
     number: String,
     createdAt: Instant)
 
-object Contact {
+object ContactProject {
   val tupled = (apply _).tupled
 
-  implicit val ContactFormat: Format[Contact] = (
+  implicit val contactProjectFormat: Format[ContactProject] = (
     (JsPath \ "id").format[UUID] and
     (JsPath \ "project_id").format[UUID] and
     (JsPath \ "sub_project_id").format[UUID] and
@@ -25,5 +25,5 @@ object Contact {
     (JsPath \ "position").format[String] and
     (JsPath \ "number").format[String] and
     (JsPath \ "created_at").format[Instant]
-  )(Contact.apply, unlift(Contact.unapply))
+  )(ContactProject.apply, unlift(ContactProject.unapply))
 }

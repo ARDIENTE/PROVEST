@@ -41,5 +41,5 @@ class AccountRepo @Inject()(
     db.run(dao.Query(accountName).delete)
 
   def update[T <: Account](acc: T): Future[Int] =
-    db.run(dao.Query(acc.idAccountRef).update(acc))
+    db.run(dao.Query(acc.id).update(acc))
 }

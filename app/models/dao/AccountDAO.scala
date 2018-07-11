@@ -18,10 +18,19 @@ final class AccountDAO @Inject()(
     def idAccountRef = column[UUID]("ID_ACCOUNT_REF", O.PrimaryKey)
     def accountName = column[String]("ACCOUNT_NAME")
     def password = column[String]("PASSWORD")
-    def email = column[String]("EMAIL")
+    def address = column[String]("ADDRESS")
+    def mapURL = column[String]("MAP_URL")
+    def imagePath = column[String]("IMAGE_PATH")
     def createdAt = column[Instant]("CREATE_AT")
 
-    def * = (idAccountRef, accountName, password, email, createdAt) <> (
+    def * = (
+      idAccountRef,
+      accountName,
+      password,
+      address,
+      mapURL,
+      imagePath,
+      createdAt) <> (
       Account.tupled, Account.unapply)
   }
 
@@ -30,24 +39,3 @@ final class AccountDAO @Inject()(
     @inline def apply(accountName: String) = this.withFilter(_.accountName === accountName)
   }
 }
-
-// @Singleton
-// final private[models] class RealmDAO @Inject()(
-//     protected val dbConfigProvider: DatabaseConfigProvider)
-//   extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
-//   import driver.api._
-
-//   protected class RealmTbl(tag: Tag)
-//     extends Table[Realm](tag, "REALMS") {
-//     def key = column[String]("KEY", O.Length(255, true), O.PrimaryKey)
-//     def label = column[String]("LABEL", O.Length(255, true))
-
-//     def * = (key, label) <> (Realm.tupled, Realm.unapply)
-//   }
-
-//   private[models] object query extends TableQuery(new RealmTbl(_)) {
-//     @inline def apply(key: String) =
-//       this.withFilter(_.key === key)
-//   }
-// }
-
