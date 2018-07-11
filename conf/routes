@@ -7,7 +7,6 @@ GET   /                                   controllers.HomeController.index
 GET   /dashboard                          controllers.HomeController.index
 GET   /contact                            controllers.HomeController.index
 GET   /features                           controllers.HomeController.index
-GET   /main                               controllers.HomeController.main
 
 # WebSocket Request
 GET   /ws                                 controllers.HomeController.ws
@@ -20,8 +19,11 @@ POST  /auth/user/create                   controllers.HomeController.createUser
 POST  /auth/user/login                    controllers.HomeController.loginUser
 GET   /auth/logout                        controllers.HomeController.logout
 
-#main page
+#UserAuth0 page
+GET   /main                               controllers.UserAuth0Controller.main
 
+#Upload Images
+POST  /location/vacinity/upload           controllers.UserAuth0Controller.locationVacinity
 #POST    /api/mridResetOf/:id              controllers.HomeController.resetAccountMrid(id: UUID)
 #PATCH   /groups/:id                       controllers.HomeController.update(id: UUID)
 

@@ -1,8 +1,6 @@
 package controllers
 
-import javax.inject._
-import java.time.Instant
-import java.util.UUID
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -16,10 +14,10 @@ import play.api.data.Forms._
 import play.api.libs.json._
 import play.api.libs.streams._
 import play.api.i18n.{ I18nSupport, MessagesApi }
+import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 import actors._
 import models.domain._
 import models.service._
-import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 
 @Singleton
 class HomeController @Inject() (
@@ -37,11 +35,11 @@ class HomeController @Inject() (
   private val verifyLongText = "Above 20 characters not allowed."
 
   private def accountForm = Form(mapping(
-      "id_account_ref" -> ignored(UUID.randomUUID),
+      "id_account_ref" -> ignored(java.util.UUID.randomUUID),
       "account_name" -> nonEmptyText,
       "password" -> nonEmptyText,
       "email" -> nonEmptyText,
-      "created_at" -> ignored(Instant.now))
+      "created_at" -> ignored(java.time.Instant.now))
   (Account.apply)(Account.unapply))
 
   private val loginForm = Form(mapping(
@@ -73,10 +71,6 @@ class HomeController @Inject() (
     )
   }
 
-  def main = SecureUserAction.async { implicit request =>
-    Future.successful(Ok(views.html.main(routes.HomeController.logout)))
-  }
-
   def createUser = Action.async { implicit request =>
     accountForm.bindFromRequest.fold(
       formWithErrors => Future.successful(Redirect(routes.HomeController.auth())),
@@ -98,7 +92,7 @@ class HomeController @Inject() (
           .checkAccount(login.accountName, login.password)
           .map(
             if(_)
-              Redirect(routes.HomeController.main())
+              Redirect(routes.UserAuth0Controller.main())
                 .flashing("info" -> "You are logged in.")
                 .withSession(utils.UserAuth.SESSION_USERNAME_KEY -> login.accountName)
             else

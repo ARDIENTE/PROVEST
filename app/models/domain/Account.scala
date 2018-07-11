@@ -17,10 +17,10 @@ object Account {
   val tupled = (apply _).tupled
 
   implicit val locationFormat: Format[Account] = (
-    (JsPath \ "lat").format[UUID] and
-    (JsPath \ "lat").format[String] and
-    (JsPath \ "lat").format[String] and
-    (JsPath \ "lat").format[String] and
-    (JsPath \ "long").format[Instant]
+    (JsPath \ "id_account_ref").format[UUID] and
+    (JsPath \ "account_name").format[String] and
+    (JsPath \ "password").format[String] and
+    (JsPath \ "email").format[String] and
+    (JsPath \ "createdAt").format[Instant]
   )(Account.apply, unlift(Account.unapply))
 }
