@@ -34,13 +34,13 @@ class HomeController @Inject() (
   private val verifyShortText = "Must be 3 to 20 characters allowed."
   private val verifyLongText = "Above 20 characters not allowed."
 
-  private def accountForm = Form(mapping(
+  private def newAccountForm = Form(mapping(
     "id" -> ignored(java.util.UUID.randomUUID),
     "account_name" -> nonEmptyText,
     "password" -> nonEmptyText,
     "address" -> nonEmptyText,
     "map_URL" -> nonEmptyText,
-    "image_path" -> nonEmptyText,
+    "image_path" -> default(text, ""),
     "created_at" -> ignored(java.time.Instant.now))
   (Account.apply)(Account.unapply))
 
@@ -74,7 +74,7 @@ class HomeController @Inject() (
   }
 
   def createUser = Action.async { implicit request =>
-    accountForm.bindFromRequest.fold(
+    newAccountForm.bindFromRequest.fold(
       formWithErrors => Future.successful(Redirect(routes.HomeController.auth())),
       account => {
         accountService

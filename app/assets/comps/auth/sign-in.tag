@@ -1,9 +1,11 @@
 <sign-in>
   <form  method="POST" action="../auth/user/login">
     <sign-logo></sign-logo>
-
-    <div class="form-label-group" if={opts.mess != ''}>
-      <div class="alert alert-danger" role="alert"> {opts.mess} </div>
+    <div
+        class="alert alert-danger alert-dismissible fade show"
+        role="alert"
+        if={opts.mess !== ''}>
+      {opts.mess}
     </div>
 
     <div class="form-label-group">
@@ -29,7 +31,13 @@
     </div>
 
     <br>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <button
+        class="btn btn-lg btn-primary btn-block"
+        id="btn-sign-in"
+        type="submit">
+        Sign in
+    </button>
+
     <p class="mt-5 mb-3 text-muted text-center">
       <span class="nav-link" > Not yet Registered?
         <a id="register-link" href="/auth/sign-up">Sign up</a>
@@ -41,9 +49,21 @@
   var self = this,
     helper = window.Helpers.factory()
 
+    autoClose() {
+      window.setTimeout(function() {
+          $(".alert").fadeTo(500, 0).slideUp(500, function(){
+              self.opts.mess = '';
+              $(this).remove();
+          });
+      }, 1000);
+    }
+
     this.on('mount', function() {
       helper.setTitle({ title: 'Sign in' })
+    })
 
+    this.on('update', () => {
+      self.autoClose();
     })
   </script>
 </sign-in>
