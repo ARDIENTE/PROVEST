@@ -8,7 +8,7 @@ import play.api.libs.functional.syntax._
 case class Email(
     id: UUID,
     title: String,
-    email: String,
+    mail: String,
     createdAt: Instant)
 
 object Email {
@@ -17,7 +17,7 @@ object Email {
   implicit val EmailFormat: Format[Email] = (
     (JsPath \ "id").format[UUID] and
     (JsPath \ "title").format[String] and
-    (JsPath \ "email").format[String] and
+    (JsPath \ "mail").format[String] and
     (JsPath \ "created_at").format[Instant]
   )(Email.apply, unlift(Email.unapply))
 }

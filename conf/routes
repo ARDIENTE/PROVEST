@@ -22,8 +22,12 @@ GET   /auth/logout                        controllers.HomeController.logout
 #UserAuth0 page
 GET   /main                               controllers.UserAuth0Controller.main
 
-#Upload Images
-POST  /location/vacinity/upload           controllers.UserAuth0Controller.locationVacinity
+#AmenitiesAndFacility
+POST  /amenities&facility/add             controllers.UserAuth0Controller.addAmenitiesAndFacility
+
+
+#locationVacinity
+POST  /location&vacinity/add              controllers.UserAuth0Controller.addLocationVacinity
 #POST    /api/mridResetOf/:id              controllers.HomeController.resetAccountMrid(id: UUID)
 #PATCH   /groups/:id                       controllers.HomeController.update(id: UUID)
 

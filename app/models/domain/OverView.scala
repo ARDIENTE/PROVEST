@@ -13,7 +13,7 @@ case class OverView(
     phase: Int,
     status: String,
     address: String,
-    map: String,
+    mapURL: String,
     createdAt: Instant)
 
 object OverView {
@@ -23,11 +23,11 @@ object OverView {
     (JsPath \ "id").format[UUID] and
     (JsPath \ "project_id").format[UUID] and
     (JsPath \ "sub_project_id").format[UUID] and
-    (JsPath \ "totalLandArea").format[Double] and
+    (JsPath \ "total_land_area").format[Double] and
     (JsPath \ "phase").format[Int] and
     (JsPath \ "status").format[String] and
     (JsPath \ "address").format[String] and
-    (JsPath \ "map").format[String] and
+    (JsPath \ "map_URL").format[String] and
     (JsPath \ "created_at").format[Instant]
   )(OverView.apply, unlift(OverView.unapply))
 }

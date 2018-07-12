@@ -14,17 +14,17 @@ final class EmailDAO @Inject()(
   ) extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
 
-  protected class EmailTable(tag: Tag) extends 
+  protected class EmailTable(tag: Tag) extends
     Table[Email](tag, "EMAIL") {
       def id = column[UUID]("ID", O.PrimaryKey)
       def title = column[String]("TITLE")
-      def email = column[String]("EMAIL")
+      def mail = column[String]("EMAIL")
       def createdAt = column[Instant]("CREATED_AT")
 
       def * = (
         id,
         title,
-        email,
+        mail,
         createdAt) <> (
         Email.tupled, Email.unapply)
   }

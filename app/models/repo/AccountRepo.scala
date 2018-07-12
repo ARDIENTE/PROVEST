@@ -12,8 +12,8 @@ import models.domain.Account
 class AccountRepo @Inject()(
     dao: models.dao.AccountDAO,
     protected val dbConfigProvider: DatabaseConfigProvider,
-    implicit val ec: ExecutionContext)
-  extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
+    implicit val ec: ExecutionContext
+  ) extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
 
   def exists(accountName: String): Future[Boolean] =

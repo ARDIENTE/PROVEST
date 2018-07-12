@@ -55,7 +55,7 @@
               self.opts.mess = '';
               $(this).remove();
           });
-      }, 1000);
+      }, 3000);
     }
 
     this.on('mount', function() {
