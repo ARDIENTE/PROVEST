@@ -85,11 +85,12 @@ class HomeController @Inject() (
 
   def loginUser = Action.async { implicit request =>
     loginForm.bindFromRequest.fold(
-      formWithErrors =>
+      formWithErrors => {
         Future.successful(
           Ok(views.html.auth(loginForm, routes.HomeController.loginUser)
-        )),
-      login =>
+        ))
+      },
+      login => {
         accountService
           .checkAccount(login.accountName, login.password)
           .map(
@@ -100,6 +101,7 @@ class HomeController @Inject() (
             else
               Redirect(routes.HomeController.auth())
                 .flashing("error" -> "Invalid username or password."))
+      }
     )
   }
 

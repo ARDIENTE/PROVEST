@@ -10,7 +10,7 @@ case class PhotoAndVideoGallery(
     projectID: UUID,
     subProjectID: UUID,
     isVideo: Boolean,
-    path: String,
+    imagePath: String,
     title: String,
     createdAt: Instant)
 
@@ -22,7 +22,7 @@ object PhotoAndVideoGallery {
     (JsPath \ "project_id").format[UUID] and
     (JsPath \ "sub_project_id").format[UUID] and
     (JsPath \ "is_video").format[Boolean] and
-    (JsPath \ "path").format[String] and
+    (JsPath \ "image_path").format[String] and
     (JsPath \ "title").format[String] and
     (JsPath \ "created_at").format[Instant]
   )(PhotoAndVideoGallery.apply, unlift(PhotoAndVideoGallery.unapply))

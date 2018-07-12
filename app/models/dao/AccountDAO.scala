@@ -21,7 +21,7 @@ final class AccountDAO @Inject()(
     def address = column[String]("ADDRESS")
     def mapURL = column[String]("MAP_URL")
     def imagePath = column[String]("IMAGE_PATH")
-    def createdAt = column[Instant]("CREATE_AT")
+    def createdAt = column[Instant]("CREATED_AT")
 
     def * = (
       idAccountRef,
