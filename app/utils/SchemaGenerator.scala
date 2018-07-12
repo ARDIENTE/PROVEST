@@ -18,14 +18,13 @@ class SchemaGenerator @Inject()(
     projectDao: ProjectDAO,
     salesAndMarketingDao: SalesAndMarketingDAO,
     socialMediaDao: SocialMediaDAO,
-    subProjectDao: ProjectDAO,
+    subProjectDao: SubProjectDAO,
     val dbConfigProvider: DatabaseConfigProvider)
   extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
 
   def createDDLScript() = {
     val schemas =
-      accountDao.Query.schema ++
       accountDao.Query.schema ++
       amenitiesAndFacilityDao.Query.schema ++
       constructionUpdateDao.Query.schema ++

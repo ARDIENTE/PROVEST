@@ -15,7 +15,7 @@ final class AccountDAO @Inject()(
   import driver.api._
 
   protected class AccountTable(tag: Tag) extends Table[Account](tag, "ACCOUNT") {
-    def idAccountRef = column[UUID]("ID_ACCOUNT_REF", O.PrimaryKey)
+    def id = column[UUID]("ID", O.PrimaryKey)
     def accountName = column[String]("ACCOUNT_NAME")
     def password = column[String]("PASSWORD")
     def address = column[String]("ADDRESS")
@@ -24,7 +24,7 @@ final class AccountDAO @Inject()(
     def createdAt = column[Instant]("CREATED_AT")
 
     def * = (
-      idAccountRef,
+      id,
       accountName,
       password,
       address,
@@ -35,7 +35,7 @@ final class AccountDAO @Inject()(
   }
 
   object Query extends TableQuery(new AccountTable(_)) {
-    @inline def apply(idAccountRef: UUID) = this.withFilter(_.idAccountRef === idAccountRef)
+    @inline def apply(id: UUID) = this.withFilter(_.id === id)
     @inline def apply(accountName: String) = this.withFilter(_.accountName === accountName)
   }
 }
