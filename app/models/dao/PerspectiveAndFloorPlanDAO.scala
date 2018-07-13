@@ -4,18 +4,18 @@ import java.util.UUID
 import java.time.Instant
 import javax.inject.{ Inject, Singleton }
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
-import models.domain.PrespectiveAndFloorPlan
+import models.domain.PerspectiveAndFloorPlan
 import scala.math.BigDecimal._
 import utils._
 
 @Singleton
-final class PrespectiveAndFloorPlanDAO @Inject()(
+final class PerspectiveAndFloorPlanDAO @Inject()(
     protected val dbConfigProvider: DatabaseConfigProvider
   ) extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
 
-  protected class PrespectiveAndFloorPlanTable(tag: Tag) extends 
-    Table[PrespectiveAndFloorPlan](tag, "PRESPECTIVE_AND_FLOOR_PLAN") {
+  protected class PerspectiveAndFloorPlanTable(tag: Tag) extends
+    Table[PerspectiveAndFloorPlan](tag, "PRESPECTIVE_AND_FLOOR_PLAN") {
       def id = column[UUID]("ID", O.PrimaryKey)
       def projectID = column[UUID]("PROJECT_ID")
       def subProjectID = column[UUID]("SUB_PROJECT_ID")
@@ -30,10 +30,10 @@ final class PrespectiveAndFloorPlanDAO @Inject()(
         imagePath,
         title,
         createdAt) <> (
-        PrespectiveAndFloorPlan.tupled, PrespectiveAndFloorPlan.unapply)
+        PerspectiveAndFloorPlan.tupled, PerspectiveAndFloorPlan.unapply)
   }
 
-  object Query extends TableQuery(new PrespectiveAndFloorPlanTable(_)) {
+  object Query extends TableQuery(new PerspectiveAndFloorPlanTable(_)) {
     @inline def apply(id: UUID) = this.withFilter(_.id === id)
   }
 }

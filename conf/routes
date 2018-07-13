@@ -3,35 +3,83 @@
 # ~~~~
 
 # A home page
-GET   /                                   controllers.HomeController.index
-GET   /dashboard                          controllers.HomeController.index
-GET   /contact                            controllers.HomeController.index
-GET   /features                           controllers.HomeController.index
+GET         /                             controllers.HomeController.index
+GET         /dashboard                    controllers.HomeController.index
+GET         /contact                      controllers.HomeController.index
+GET         /features                     controllers.HomeController.index
 
 # WebSocket Request
-GET   /ws                                 controllers.HomeController.ws
+GET         /ws                           controllers.HomeController.ws
 
 # Login
-GET   /auth                               controllers.HomeController.auth
-GET   /auth/sign-up                       controllers.HomeController.auth
-GET   /auth/sign-in                       controllers.HomeController.auth
-POST  /auth/user/create                   controllers.HomeController.createUser
-POST  /auth/user/login                    controllers.HomeController.loginUser
-GET   /auth/logout                        controllers.HomeController.logout
+GET         /auth                         controllers.HomeController.auth
+GET         /auth/sign-up                 controllers.HomeController.auth
+GET         /auth/sign-in                 controllers.HomeController.auth
+POST        /auth/user/create             controllers.HomeController.createUser
+POST        /auth/user/login              controllers.HomeController.loginUser
+GET         /auth/logout                  controllers.HomeController.logout
 
 #UserAuth0 page
-GET   /main                               controllers.UserAuth0Controller.main
+GET         /main                         controllers.UserAuth0Controller.main
 
-#AmenitiesAndFacility
-POST  /amenities&facility/add             controllers.UserAuth0Controller.addAmenitiesAndFacility
+
+# SocialMedia
+POST        /social/media/add             controllers.UserAuth0Controller.addSocialMedia
+
+
+# SalesAndMarketing
+POST        /sales&marketing/add          controllers.UserAuth0Controller.addSalesAndMarketing
+
+
+# SubProject
+POST        /sub/project/add              controllers.UserAuth0Controller.addSubProject
+
+
+# Project
+POST        /project/add                  controllers.UserAuth0Controller.addProject
+
+
+# PerspectiveAndFloorPlan
+POST        /perspective&floor/plan/add   controllers.UserAuth0Controller.addPerspectiveAndFloorPlan
+
+
+# PhotoGallery
+POST        /photo/gallery/add            controllers.UserAuth0Controller.addPhotoGallery
+
+
+# VideoGallery
+POST        /video/gallery/add            controllers.UserAuth0Controller.addVideoGallery
+
+
+# OverView
+POST        /overview/add                 controllers.UserAuth0Controller.addOverView
+
+
+# Email
+POST        /company/email/add            controllers.UserAuth0Controller.addEmail
+
+
+# ContactProject
+POST        /contact/project/add          controllers.UserAuth0Controller.addContactProject
+
+
+# ConstructionUpdate
+POST        /construction/update/add      controllers.UserAuth0Controller.addConstructionUpdate
+
+
+# LocationAndVicinity
+POST        /location&vicinity/add        controllers.UserAuth0Controller.addLocationAndVicinity
+
+
+# AmenitiesAndFacility
+POST        /amenities&facility/add       controllers.UserAuth0Controller.addAmenitiesAndFacility
 
 
 #locationVacinity
-POST  /location&vicinity/add              controllers.UserAuth0Controller.addLocationAndVicinity
 #POST    /api/mridResetOf/:id              controllers.HomeController.resetAccountMrid(id: UUID)
 #PATCH   /groups/:id                       controllers.HomeController.update(id: UUID)
 
 # Web jars asset
-GET   /assets/libs/*file                  controllers.WebJarAssets.at(file)
+GET         /assets/libs/*file            controllers.WebJarAssets.at(file)
 # Map static resources from the /public folder to the /assets URL path
-GET   /assets/*file                       controllers.Assets.at(path="/public", file)
+GET         /assets/*file                 controllers.Assets.at(path="/public", file: String)

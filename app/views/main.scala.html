@@ -19,6 +19,9 @@
     <input type="text" name="sub_project_id" placeholder="classification">
     <input type="text" name="description" placeholder="description">
     <p><input type="submit" value="Upload"></p>
+    <p>@flash.get("error") </p>
+
+    <p>@flash.get("info")</p>
   }
 
   <a href="#" onclick="logout('@logoutUrl')">logout</a>

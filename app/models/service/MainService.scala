@@ -16,7 +16,7 @@ class MainService @Inject()(
     locationAndVicinityRepo: LocationAndVicinityRepo,
     overViewRepo: OverViewRepo,
     photoAndVideoGalleryRepo: PhotoAndVideoGalleryRepo,
-    prespectiveAndFloorPlanRepo: PrespectiveAndFloorPlanRepo,
+    perspectiveAndFloorPlanRepo: PerspectiveAndFloorPlanRepo,
     projectRepo: ProjectRepo,
     salesAndMarketingRepo: SalesAndMarketingRepo,
     socialMediaRepo: SocialMediaRepo,
@@ -66,12 +66,12 @@ class MainService @Inject()(
       }
     } yield add
 
-  def createPrespectiveAndFloorPlan[T <: PrespectiveAndFloorPlan](parms: T): Future[Int] =
+  def createPerspectiveAndFloorPlan[T <: PerspectiveAndFloorPlan](parms: T): Future[Int] =
     for {
-      exists <- prespectiveAndFloorPlanRepo.exists(parms.id)
+      exists <- perspectiveAndFloorPlanRepo.exists(parms.id)
 
       add <- {
-        if(!exists) prespectiveAndFloorPlanRepo.add(parms)
+        if(!exists) perspectiveAndFloorPlanRepo.add(parms)
         else Future.successful(0)
       }
     } yield add

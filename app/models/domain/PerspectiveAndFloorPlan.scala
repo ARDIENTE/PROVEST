@@ -5,7 +5,7 @@ import java.util.UUID
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-case class PrespectiveAndFloorPlan(
+case class PerspectiveAndFloorPlan(
     id: UUID,
     projectID: UUID,
     subProjectID: UUID,
@@ -13,15 +13,15 @@ case class PrespectiveAndFloorPlan(
     title: String,
     createdAt: Instant)
 
-object PrespectiveAndFloorPlan {
+object PerspectiveAndFloorPlan {
   val tupled = (apply _).tupled
 
-  implicit val PrespectiveAndFloorPlanFormat: Format[PrespectiveAndFloorPlan] = (
+  implicit val perspectiveAndFloorPlanFormat: Format[PerspectiveAndFloorPlan] = (
     (JsPath \ "id").format[UUID] and
     (JsPath \ "project_id").format[UUID] and
     (JsPath \ "sub_project_id").format[UUID] and
     (JsPath \ "path").format[String] and
     (JsPath \ "title").format[String] and
     (JsPath \ "created_at").format[Instant]
-  )(PrespectiveAndFloorPlan.apply, unlift(PrespectiveAndFloorPlan.unapply))
+  )(PerspectiveAndFloorPlan.apply, unlift(PerspectiveAndFloorPlan.unapply))
 }

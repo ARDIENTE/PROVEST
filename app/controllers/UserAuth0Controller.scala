@@ -16,9 +16,9 @@ import play.api.libs.Files.TemporaryFile
 import play.api.data.validation._
 import play.api.i18n.{ I18nSupport, MessagesApi }
 import play.core.parsers.Multipart.FileInfo
+import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 import models.domain._
 import models.service.MainService
-import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 
 @Singleton
 class UserAuth0Controller @Inject() (
@@ -28,39 +28,35 @@ class UserAuth0Controller @Inject() (
   implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport with PageMetaSupport {
   private def addLocAndVacinityForm = Form(tuple(
-      "id"              ->  ignored(UUID.randomUUID),
       "project_id"      ->  of[UUID],
       "sub_project_id"  ->  of[UUID],
       "description"     ->  nonEmptyText,
       "created_at"      ->  ignored(Instant.now)))
   private def addAmenitiesAndFacilityForm = Form(tuple(
-      "id"              ->  ignored(UUID.randomUUID),
       "project_id"      ->  of[UUID],
       "sub_project_id"  ->  of[UUID],
       "title"           ->  nonEmptyText,
       "description"     ->  text,
       "created_at"      ->  ignored(Instant.now)))
   private def addConstructionUpdateForm = Form(tuple(
-      "id"              ->  ignored(UUID.randomUUID),
       "project_id"      ->  of[UUID],
       "sub_project_id"  ->  of[UUID],
       "title"     ->  nonEmptyText,
       "created_at"      ->  ignored(Instant.now)))
   private def addContactProjectForm = Form(tuple(
-      "id"              ->  ignored(UUID.randomUUID),
       "project_id"      ->  of[UUID],
       "sub_project_id"  ->  of[UUID],
       "name"            ->  nonEmptyText,
       "position"        ->  nonEmptyText,
       "number"          ->  nonEmptyText,
       "created_at"      ->  ignored(Instant.now)))
-  private def addEmailForm = Form(tuple(
+  private def addEmailForm = Form(mapping(
       "id"              ->  ignored(UUID.randomUUID),
       "title"           ->  nonEmptyText,
       "mail"            ->  email,
-      "created_at"      ->  ignored(Instant.now)))
+      "created_at"      ->  ignored(Instant.now)
+    )(Email.apply)(Email.unapply))
   private def addOverViewForm = Form(tuple(
-      "id"              ->  ignored(UUID.randomUUID),
       "project_id"      ->  of[UUID],
       "sub_project_id"  ->  of[UUID],
       "total_land_area" ->  of[Double],
@@ -69,157 +65,219 @@ class UserAuth0Controller @Inject() (
       "address"         ->  nonEmptyText,
       "map_URL"         ->  text,
       "created_at"      ->  ignored(Instant.now)))
-  private def addPhotoVideoGalleryForm = Form(tuple(
-      "id"              ->  ignored(UUID.randomUUID),
+  private def addPhotoGalleryForm = Form(tuple(
       "project_id"      ->  of[UUID],
       "sub_project_id"  ->  of[UUID],
-      "is_video"        ->  of[Boolean],
+      "is_video"        ->  ignored(false),
       "title"           ->  nonEmptyText,
       "created_at"      ->  ignored(Instant.now)))
-  private def addPrespectiveFloorPlanForm = Form(tuple(
-      "id"              ->  ignored(UUID.randomUUID),
+  private def addVideoGalleryForm = Form(tuple(
+      "project_id"      ->  of[UUID],
+      "sub_project_id"  ->  of[UUID],
+      "is_video"        ->  ignored(false),
+      "URL"             ->  nonEmptyText,
+      "title"           ->  nonEmptyText,
+      "created_at"      ->  ignored(Instant.now)))
+  private def addPerspectiveAndFloorPlanForm = Form(tuple(
       "project_id"      ->  of[UUID],
       "sub_project_id"  ->  of[UUID],
       "title"           ->  nonEmptyText,
       "created_at"      ->  ignored(Instant.now)))
-  private def addProjectForm = Form(tuple(
+  private def addProjectForm = Form(mapping(
       "id"              ->  ignored(UUID.randomUUID),
-      "name"            ->  nonEmptyText))
-  private def addSubProjectForm = Form(tuple(
+      "name"            ->  nonEmptyText
+    )(Project.apply)(Project.unapply))
+  private def addSubProjectForm = Form(mapping(
       "id"              ->  ignored(UUID.randomUUID),
-      "name"            ->  nonEmptyText))
-  private def addSalesAndMarketingForm = Form(tuple(
+      "name"            ->  nonEmptyText
+    )(SubProject.apply)(SubProject.unapply))
+  private def addSalesAndMarketingForm = Form(mapping(
       "id"              ->  ignored(UUID.randomUUID),
       "title"           ->  nonEmptyText,
       "number"          ->  nonEmptyText,
-      "created_at"      ->  ignored(Instant.now)))
-  private def addSocialMediaForm = Form(tuple(
+      "created_at"      ->  ignored(Instant.now)
+    )(SalesAndMarketing.apply)(SalesAndMarketing.unapply))
+  private def addSocialMediaForm = Form(mapping(
       "id"              ->  ignored(UUID.randomUUID),
       "URL"             ->  text,
-      "title"           ->  nonEmptyText))
+      "title"           ->  nonEmptyText
+    )(SocialMedia.apply)(SocialMedia.unapply))
 
   def main = SecureUserAction.async { implicit request =>
     Future.successful(Ok(views.html.main(routes.HomeController.logout)))
   }
 
-  def addSocialMedia = SecureUserAction(parse.multipartFormData) { implicit request =>
+  def addSocialMedia = SecureUserAction.async(parse.multipartFormData) { implicit request =>
     addSocialMediaForm.bindFromRequest.fold(
-      badRequest => Redirect(routes.UserAuth0Controller.main),
-      { case (a, b, c) =>
-        for {
-          _ <- uploadImage("social-media", request)
-          // Add User to Database....
-        } yield ()
-
-        Redirect(routes.UserAuth0Controller.main)
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { result =>
+        service
+          .createSocialMedia(result)
+          .map { result =>
+            if (result == 0 )
+              Redirect(routes.UserAuth0Controller.main)
+            else
+              Redirect(routes.UserAuth0Controller.main)
+          }
       })
   }
 
-  def addSalesAndMarketing = SecureUserAction(parse.multipartFormData) { implicit request =>
+  def addSalesAndMarketing = SecureUserAction.async(parse.multipartFormData) { implicit request =>
     addSalesAndMarketingForm.bindFromRequest.fold(
-      badRequest => Redirect(routes.UserAuth0Controller.main),
-      { case (a, b, c, d) =>
-        for {
-          _ <- uploadImage("sales-and-marketing", request)
-          // Add User to Database....
-        } yield ()
-
-        Redirect(routes.UserAuth0Controller.main)
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { result =>
+        service
+          .createSalesAndMarketing(result)
+          .map { result =>
+            if (result == 0 )
+              Redirect(routes.UserAuth0Controller.main)
+            else
+              Redirect(routes.UserAuth0Controller.main)
+          }
       })
   }
 
 
-  def addSubProject = SecureUserAction(parse.multipartFormData) { implicit request =>
+  def addSubProject = SecureUserAction.async(parse.multipartFormData) { implicit request =>
     addSubProjectForm.bindFromRequest.fold(
-      badRequest => Redirect(routes.UserAuth0Controller.main),
-      { case (a, b) =>
-        for {
-          _ <- uploadImage("sub-project", request)
-          // Add User to Database....
-        } yield ()
-
-        Redirect(routes.UserAuth0Controller.main)
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      result => {
+        service
+          .createSubProject(result)
+          .map { result =>
+            if (result == 0 )
+              Redirect(routes.UserAuth0Controller.main)
+            else
+              Redirect(routes.UserAuth0Controller.main)
+          }
       })
   }
 
-  def addProject = SecureUserAction(parse.multipartFormData) { implicit request =>
+  def addProject = SecureUserAction.async(parse.multipartFormData) { implicit request =>
     addProjectForm.bindFromRequest.fold(
-      badRequest => Redirect(routes.UserAuth0Controller.main),
-      { case (a, b) =>
-        for {
-          _ <- uploadImage("project", request)
-          // Add User to Database....
-        } yield ()
-
-        Redirect(routes.UserAuth0Controller.main)
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      result => {
+        service
+          .createProject(result)
+          .map { result =>
+            if (result == 0 )
+              Redirect(routes.UserAuth0Controller.main)
+            else
+              Redirect(routes.UserAuth0Controller.main)
+          }
       })
   }
 
-  def addPrespectiveFloorPlan = SecureUserAction(parse.multipartFormData) { implicit request =>
-    addPrespectiveFloorPlanForm.bindFromRequest.fold(
-      badRequest => Redirect(routes.UserAuth0Controller.main),
-      { case (a, b, c, d, e) =>
-        for {
-          _ <- uploadImage("prespective-floor-plan", request)
-          // Add User to Database....
-        } yield ()
-
-        Redirect(routes.UserAuth0Controller.main)
-      })
-  }
-
-  def addPhotoVideoGallery = SecureUserAction(parse.multipartFormData) { implicit request =>
-    addPhotoVideoGalleryForm.bindFromRequest.fold(
-      badRequest => Redirect(routes.UserAuth0Controller.main),
-      { case (a, b, c, d, e, f) =>
-        for {
-          _ <- uploadImage("photo-video-gallery", request)
-          // Add User to Database....
-        } yield ()
-
-        Redirect(routes.UserAuth0Controller.main)
-      })
-  }
-
-  def addOverView = SecureUserAction(parse.multipartFormData) { implicit request =>
-    addOverViewForm.bindFromRequest.fold(
-      badRequest => Redirect(routes.UserAuth0Controller.main),
-      { case (a, b, c, d, e, f, g, h, i) =>
-        for {
-          _ <- uploadImage("overview", request)
-          // Add User to Database....
-        } yield ()
-
-        Redirect(routes.UserAuth0Controller.main)
-      })
-  }
-
-  def addEmail = SecureUserAction(parse.multipartFormData) { implicit request =>
-    addEmailForm.bindFromRequest.fold(
-      badRequest => Redirect(routes.UserAuth0Controller.main),
+  def addPerspectiveAndFloorPlan = SecureUserAction.async(parse.multipartFormData) { implicit request =>
+    addPerspectiveAndFloorPlanForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d) =>
-        for {
-          _ <- uploadImage("email", request)
-          // Add User to Database....
-        } yield ()
+        (for {
+            path <- uploadImage("perspective-floor-plan", request)
 
-        Redirect(routes.UserAuth0Controller.main)
+            add <- Future.sequence { // Add User to Database....
+              path.map { case (stat, url) =>
+                if (stat.contains("Done"))
+                  service.createPerspectiveAndFloorPlan(
+                    PerspectiveAndFloorPlan(UUID.randomUUID, a, b, url, c, d))
+                else
+                  Future.successful(0)
+              }}
+          } yield (add)
+        ).map { result =>
+          if (result.contains(0))
+            Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Error or Some files has failed.")
+          else
+            Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Done uploading.")
+        }
+      })
+  }
+
+  def addPhotoGallery = SecureUserAction.async(parse.multipartFormData) { implicit request =>
+    addPhotoGalleryForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c, d, e) =>
+        (for {
+            path <- uploadImage("photo-and-video-gallery", request)
+
+            add <- Future.sequence { // Add User to Database....
+              path.map { case (stat, url) =>
+                if (stat.contains("Done"))
+                  service.createPhotoAndVideoGallery(
+                    PhotoAndVideoGallery(UUID.randomUUID, a, b, c, url, d, e))
+                else
+                  Future.successful(0)
+              }}
+          } yield (add)
+        ).map { result =>
+          if (result.contains(0))
+            Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Error or Some files has failed.")
+          else
+            Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Done uploading.")
+        }
+      })
+  }
+
+  def addVideoGallery = SecureUserAction.async(parse.multipartFormData) { implicit request =>
+    addVideoGalleryForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c, d, e, f) =>
+        service
+          .createPhotoAndVideoGallery(PhotoAndVideoGallery(UUID.randomUUID, a, b, c, d, e, f))
+          .map { result =>
+            if (result == 0)
+              Redirect(routes.UserAuth0Controller.main)
+            else
+              Redirect(routes.UserAuth0Controller.main)
+          }
+      })
+  }
+
+  def addOverView = SecureUserAction.async(parse.multipartFormData) { implicit request =>
+    addOverViewForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c, d, e, f, g, h) =>
+        service
+          .createOverView(OverView(UUID.randomUUID, a, b, c, d, e, f, g, h))
+          .map { result =>
+            if (result == 0)
+              Redirect(routes.UserAuth0Controller.main)
+            else
+              Redirect(routes.UserAuth0Controller.main)
+          }
+      })
+  }
+
+  def addEmail = SecureUserAction.async(parse.multipartFormData) { implicit request =>
+    addEmailForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { result =>
+        service
+          .createEmail(result)
+          .map { result =>
+            if (result == 0)
+              Redirect(routes.UserAuth0Controller.main)
+            else
+              Redirect(routes.UserAuth0Controller.main)
+          }
       })
   }
 
   def addContactProject = SecureUserAction.async(parse.multipartFormData) { implicit request =>
     addContactProjectForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
-      { case form@(a, b, c, d, e, f, g) =>
+      { case (a, b, c, d, e, f) =>
         service
-          .createContactProject((ContactProject.apply _) tupled form)
+          .createContactProject(ContactProject(UUID.randomUUID, a, b, c, d, e, f))
           .map { result =>
-            if (result == 0) 
+            if (result == 0)
               Redirect(routes.UserAuth0Controller.main)
-                .flashing("error" -> "Error or Some files has failed.")
             else
               Redirect(routes.UserAuth0Controller.main)
-                .flashing("info" -> "Done uploading.")
           }
       })
   }
@@ -227,23 +285,21 @@ class UserAuth0Controller @Inject() (
   def addConstructionUpdate = SecureUserAction.async(parse.multipartFormData) { implicit request =>
     addConstructionUpdateForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
-      { case (a, b, c, d, e) =>
-        val validate = {
-          for {
+      { case (a, b, c, d) =>
+        (for {
             path <- uploadImage("construction-update", request)
-            
+
             add <- Future.sequence { // Add User to Database....
               path.map { case (stat, url) =>
                 if (stat.contains("Done"))
-                  service.createConstructionUpdate(ConstructionUpdate(a, b, c, url, d, e))
+                  service.createConstructionUpdate(
+                    ConstructionUpdate(UUID.randomUUID, a, b, url, c, d))
                 else
                   Future.successful(0)
               }}
           } yield (add)
-        }
-
-        validate.map { result =>
-          if (result.contains(0)) 
+        ).map { result =>
+          if (result.contains(0))
             Redirect(routes.UserAuth0Controller.main)
               .flashing("error" -> "Error or Some files has failed.")
           else
@@ -256,24 +312,21 @@ class UserAuth0Controller @Inject() (
   def addLocationAndVicinity = SecureUserAction.async(parse.multipartFormData) { implicit request =>
     addLocAndVacinityForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
-      { case (a, b, c, d, e) => 
-
-        val validate = {
-          for {
+      { case (a, b, c, d) =>
+        (for {
             path <- uploadImage("location-and-vicinity", request)
-            
+
             add <- Future.sequence { // Add User to Database....
-              path.map { case (stat, url) =>
-                if (stat.contains("Done"))
-                  service.createLocationAndVicinity(LocationAndVicinity(a, b, c, url, d, e))
+              path.map { case (status, url) =>
+                if (status.contains("Done"))
+                  service.createLocationAndVicinity(
+                    LocationAndVicinity(UUID.randomUUID,a, b, url, c, d))
                 else
                   Future.successful(0)
               }}
           } yield (add)
-        }
-
-        validate.map { result =>
-          if (result.contains(0)) 
+        ).map { result =>
+          if (result.contains(0))
             Redirect(routes.UserAuth0Controller.main)
               .flashing("error" -> "Error or Some files has failed.")
           else
@@ -286,23 +339,21 @@ class UserAuth0Controller @Inject() (
   def addAmenitiesAndFacility = SecureUserAction.async(parse.multipartFormData) { implicit request =>
     addAmenitiesAndFacilityForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
-      { case (a, b, c, d, e, f) =>
-        val validate = {
-          for {
+      { case (a, b, c, d, e) =>
+        (for {
             path <- uploadImage("amenities-and-facility", request)
-            
+
             add <- Future.sequence { // Add User to Database....
-              path.map { case (stat, url) =>
-                if (stat.contains("Done"))
-                  service.createAmenitiesAndFacility(AmenitiesAndFacility(a, b, c, url, d, e, f))
+              path.map { case (status, url) =>
+                if (status.contains("Done"))
+                  service.createAmenitiesAndFacility(
+                      AmenitiesAndFacility(UUID.randomUUID, a, b, url, c, d, e))
                 else
                   Future.successful(0)
               }}
           } yield (add)
-        }
-
-        validate.map { result =>
-          if (result.contains(0)) 
+        ).map { result =>
+          if (result.contains(0))
             Redirect(routes.UserAuth0Controller.main)
               .flashing("error" -> "Error or Some files has failed.")
           else
@@ -312,22 +363,23 @@ class UserAuth0Controller @Inject() (
       })
   }
 
-  private def uploadImage[A >: String]
-    ( folder: A,
-      request: Request[MultipartFormData[TemporaryFile]]
-    ): Future[Seq[(A, A)]] = {
-    Future.successful {
-      if (!request.body.files.isEmpty)
-        request.body.files.map { file =>
-          val newPath = s"public/images/${folder}/" + Random.nextString(5) + file.filename
-          try {
-            file.ref.moveTo(new File(newPath))
-            ("Done", newPath)
-          } catch {
-            case _: Exception => ("Error", file.filename)
+  private def uploadImage[A >: String](
+      folder: A,
+      request: Request[MultipartFormData[TemporaryFile]]):
+    Future[Seq[(A, A)]] = {
+      Future.successful {
+        if (!request.body.files.isEmpty)
+          request.body.files.map { file =>
+            val random = Random.alphanumeric.take(5).mkString("")
+            val newPath = s"public/images/${folder}/${random + file.filename}"
+            try {
+              file.ref.moveTo(new File(newPath))
+              ("Done", newPath)
+            } catch {
+              case _: Exception => ("Error", file.filename)
+            }
           }
-        }
-      else Seq.empty[(A, A)]
+        else Seq.empty[(A, A)]
+      }
     }
-  }
 }

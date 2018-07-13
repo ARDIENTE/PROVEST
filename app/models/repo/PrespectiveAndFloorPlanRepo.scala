@@ -6,11 +6,11 @@ import scala.concurrent.{ ExecutionContext, Future }
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import cats.data.{ EitherT, OptionT }
 import cats.implicits._
-import models.domain.PrespectiveAndFloorPlan
+import models.domain.PerspectiveAndFloorPlan
 
 @Singleton
-class PrespectiveAndFloorPlanRepo @Inject()(
-    dao: models.dao.PrespectiveAndFloorPlanDAO,
+class PerspectiveAndFloorPlanRepo @Inject()(
+    dao: models.dao.PerspectiveAndFloorPlanDAO,
     protected val dbConfigProvider: DatabaseConfigProvider,
     implicit val ec: ExecutionContext
   ) extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
@@ -19,27 +19,27 @@ class PrespectiveAndFloorPlanRepo @Inject()(
   def exists(id: UUID): Future[Boolean] =
     db.run(dao.Query(id).exists.result)
 
-  def checkPrespectiveAndFloorPlan(projectID: UUID, subProjectID: UUID): Future[Boolean] =
+  def checkPerspectiveAndFloorPlan(projectID: UUID, subProjectID: UUID): Future[Boolean] =
     db.run(dao.Query.filter( count =>
       count.projectID === projectID &&
       count.subProjectID === subProjectID).exists.result
     )
 
-  def get: Future[Seq[PrespectiveAndFloorPlan]] =
+  def get: Future[Seq[PerspectiveAndFloorPlan]] =
     db.run(dao.Query.result)
 
-  def getByIds(subProjectID: Seq[UUID]): Future[Seq[PrespectiveAndFloorPlan]] =
+  def getByIds(subProjectID: Seq[UUID]): Future[Seq[PerspectiveAndFloorPlan]] =
     db.run(dao.Query.filter(_.subProjectID inSetBind subProjectID).result)
 
-  def find(id: UUID): OptionT[Future, PrespectiveAndFloorPlan] =
+  def find(id: UUID): OptionT[Future, PerspectiveAndFloorPlan] =
     OptionT(db.run(dao.Query(id).result.headOption))
 
-  def add(params: PrespectiveAndFloorPlan): Future[Int] =
+  def add(params: PerspectiveAndFloorPlan): Future[Int] =
     db.run(dao.Query += params)
 
   def delete(id: UUID): Future[Int] =
     db.run(dao.Query(id).delete)
 
-  def update(params: PrespectiveAndFloorPlan): Future[Int] =
+  def update(params: PerspectiveAndFloorPlan): Future[Int] =
     db.run(dao.Query(params.id).update(params))
 }

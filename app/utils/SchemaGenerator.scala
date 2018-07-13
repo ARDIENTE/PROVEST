@@ -14,7 +14,7 @@ class SchemaGenerator @Inject()(
     locationAndVicinityDao: LocationAndVicinityDAO,
     overViewDao: OverViewDAO,
     photoAndVideoGalleryDao: PhotoAndVideoGalleryDAO,
-    prespectiveAndFloorPlanDao: PrespectiveAndFloorPlanDAO,
+    perspectiveAndFloorPlanDao: PerspectiveAndFloorPlanDAO,
     projectDao: ProjectDAO,
     salesAndMarketingDao: SalesAndMarketingDAO,
     socialMediaDao: SocialMediaDAO,
@@ -33,7 +33,7 @@ class SchemaGenerator @Inject()(
       locationAndVicinityDao.Query.schema ++
       overViewDao.Query.schema ++
       photoAndVideoGalleryDao.Query.schema ++
-      prespectiveAndFloorPlanDao.Query.schema ++
+      perspectiveAndFloorPlanDao.Query.schema ++
       projectDao.Query.schema ++
       salesAndMarketingDao.Query.schema ++
       socialMediaDao.Query.schema ++
