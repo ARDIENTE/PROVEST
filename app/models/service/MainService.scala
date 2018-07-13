@@ -27,41 +27,81 @@ class MainService @Inject()(
   ) extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
 
-  def getSocialMedia: Future[Seq[SocialMedia]] =
+  def getSocialMedia: Future[Seq[SocialMedia]] = {
     socialMediaRepo.get
+  }
 
-  def getSalesAndMarketing: Future[Seq[SalesAndMarketing]] =
+  def getSalesAndMarketing: Future[Seq[SalesAndMarketing]] = {
     salesAndMarketingRepo.get
+  }
 
-  def getProject: Future[Seq[Project]] =
+  def getProject: Future[Seq[Project]] = {
     projectRepo.get
+  }
 
-  def getSubProject: Future[Seq[SubProject]] =
+  def getSubProject: Future[Seq[SubProject]] = {
     subProjectRepo.get
+  }
 
-  def getPerspectiveAndFloorPlan: Future[Seq[PerspectiveAndFloorPlan]] =
+  def getPerspectiveAndFloorPlan: Future[Seq[PerspectiveAndFloorPlan]] = {
     perspectiveAndFloorPlanRepo.get
+  }
 
-  def getPhotoAndVideoGallery: Future[Seq[PhotoAndVideoGallery]] =
+  def getPerspectiveAndFloorPlanByIDs[T <: UUID](a: T, b: T): Future[Seq[PerspectiveAndFloorPlan]] = {
+    perspectiveAndFloorPlanRepo.getByIDs(a, b)
+  }
+
+  def getPhotoAndVideoGallery: Future[Seq[PhotoAndVideoGallery]] = {
     photoAndVideoGalleryRepo.get
+  }
 
-  def getOverView: Future[Seq[OverView]] =
+  def getPhotoVideoGalleryByIDs[T <: UUID](a: T, b: T): Future[Seq[PhotoAndVideoGallery]] = {
+    photoAndVideoGalleryRepo.getByIDs(a, b)
+  }
+
+  def getOverView: Future[Seq[OverView]] = {
     overViewRepo.get
+  }
 
-  def getLocationAndVicinity: Future[Seq[LocationAndVicinity]] =
+  def getOverViewByIDs[T <: UUID](a: T, b: T): Future[Seq[OverView]] = {
+    overViewRepo.getByIDs(a, b)
+  }
+
+  def getLocationAndVicinity: Future[Seq[LocationAndVicinity]] = {
     locationAndVicinityRepo.get
+  }
 
-  def getEmail: Future[Seq[Email]] =
+  def getLocationAndVicinityByIDs[T <: UUID](a: T, b: T): Future[Seq[LocationAndVicinity]] = {
+    locationAndVicinityRepo.getByIDs(a, b)
+  }
+
+  def getEmail: Future[Seq[Email]] = {
     emailRepo.get
+  }
 
-  def getContactProject: Future[Seq[ContactProject]] =
+  def getContactProject: Future[Seq[ContactProject]] = {
     contactProjectRepo.get
+  }
 
-  def getConstructionUpdate: Future[Seq[ConstructionUpdate]] =
+  def getContactProjectByIDs[T <: UUID](a: T, b: T): Future[Seq[ContactProject]] = {
+    contactProjectRepo.getByIDs(a, b)
+  }
+
+  def getConstructionUpdate: Future[Seq[ConstructionUpdate]] = {
     constructionUpdateRepo.get
+  }
 
-  def getAmenitiesAndFacility: Future[Seq[AmenitiesAndFacility]] =
+  def getConstructionUpdateByIDs[T <: UUID](a: T, b: T): Future[Seq[ConstructionUpdate]] = {
+    constructionUpdateRepo.getByIDs(a, b)
+  }
+
+  def getAmenitiesAndFacility: Future[Seq[AmenitiesAndFacility]] = {
     amenitiesAndFacilityRepo.get
+  }
+
+  def getAmenitiesAndFacilityByIDs[T <: UUID](a: T, b: T): Future[Seq[AmenitiesAndFacility]] = {
+    amenitiesAndFacilityRepo.getByIDs(a, b)
+  }
 
   def removeSubProject[T <: UUID](parms: T): Future[Int] =
     for {

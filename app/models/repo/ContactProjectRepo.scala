@@ -28,8 +28,8 @@ class ContactProjectRepo @Inject()(
   def get: Future[Seq[ContactProject]] =
     db.run(dao.Query.result)
 
-  def getByIds(subProjectID: Seq[UUID]): Future[Seq[ContactProject]] =
-    db.run(dao.Query.filter(_.subProjectID inSetBind subProjectID).result)
+  def getByIDs(projectID: UUID, subProjectID: UUID): Future[Seq[ContactProject]] =
+    db.run(dao.Query.filter(r => r.projectID === projectID && r.subProjectID === subProjectID).result)
 
   def find(id: UUID): OptionT[Future, ContactProject] =
     OptionT(db.run(dao.Query(id).result.headOption))

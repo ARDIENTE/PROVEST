@@ -33,53 +33,89 @@ class UserAuth0Controller @Inject() (
     Future.successful(Ok(views.html.main(routes.HomeController.logout)))
   }
 
-  def getSocialMedia = SecureUserAction.async { implicit request =>
+  def getSocialMedia = Action.async { implicit request =>
     service.getSocialMedia.map(count => Ok(Json.toJson(count)))
   }
 
-  def getSalesAndMarketing = SecureUserAction.async { implicit request =>
+  def getSalesAndMarketing = Action.async { implicit request =>
     service.getSalesAndMarketing.map(count => Ok(Json.toJson(count)))
   }
 
-  def getProject = SecureUserAction.async { implicit request =>
+  def getProject = Action.async { implicit request =>
     service.getProject.map(count => Ok(Json.toJson(count)))
   }
 
-  def getSubProject = SecureUserAction.async { implicit request =>
+  def getSubProject = Action.async { implicit request =>
     service.getSubProject.map(count => Ok(Json.toJson(count)))
   }
 
-  def getPerspectiveAndFloorPlan = SecureUserAction.async { implicit request =>
+  def getPerspectiveAndFloorPlan = Action.async { implicit request =>
     service.getPerspectiveAndFloorPlan.map(count => Ok(Json.toJson(count)))
   }
 
-  def getPhotoAndVideoGallery = SecureUserAction.async { implicit request =>
+  def getPerspectiveAndFloorPlanByIDs[T >: UUID](proID: UUID, subID: UUID) = Action.async
+    { implicit request =>
+      service.getPerspectiveAndFloorPlanByIDs(proID, subID).map(count => Ok(Json.toJson(count)))
+    }
+
+
+  def getPhotoAndVideoGallery = Action.async { implicit request =>
     service.getPhotoAndVideoGallery.map(count => Ok(Json.toJson(count)))
   }
 
-  def getOverView = SecureUserAction.async { implicit request =>
+  def getPhotoVideoGalleryByIDs[T >: UUID](proID: UUID, subID: UUID) = Action.async
+    { implicit request =>
+      service.getPhotoVideoGalleryByIDs(proID, subID).map(count => Ok(Json.toJson(count)))
+    }
+
+  def getOverView = Action.async { implicit request =>
     service.getOverView.map(count => Ok(Json.toJson(count)))
   }
 
-  def getLocationAndVicinity = SecureUserAction.async { implicit request =>
+  def getOverViewByIDs[T >: UUID](proID: UUID, subID: UUID) = Action.async
+    { implicit request =>
+      service.getOverViewByIDs(proID, subID).map(count => Ok(Json.toJson(count)))
+    }
+
+  def getLocationAndVicinity = Action.async { implicit request =>
     service.getLocationAndVicinity.map(count => Ok(Json.toJson(count)))
   }
 
-  def getEmail = SecureUserAction.async { implicit request =>
+  def getLocationAndVicinityByIDs[T >: UUID](proID: UUID, subID: UUID) = Action.async
+    { implicit request =>
+      service.getLocationAndVicinityByIDs(proID, subID).map(count => Ok(Json.toJson(count)))
+    }
+
+  def getEmail = Action.async { implicit request =>
     service.getEmail.map(count => Ok(Json.toJson(count)))
   }
 
-  def getContactProject = SecureUserAction.async { implicit request =>
+  def getContactProject = Action.async { implicit request =>
     service.getContactProject.map(count => Ok(Json.toJson(count)))
   }
 
-  def getConstructionUpdate = SecureUserAction.async { implicit request =>
+  def getContactProjectByIDs[T >: UUID](proID: UUID, subID: UUID) = Action.async
+    { implicit request =>
+      service.getContactProjectByIDs(proID, subID).map(count => Ok(Json.toJson(count)))
+    }
+
+  def getConstructionUpdate = Action.async { implicit request =>
     service.getConstructionUpdate.map(count => Ok(Json.toJson(count)))
   }
 
-  def getAmenitiesAndFacility = SecureUserAction.async { implicit request =>
+  def getConstructionUpdateByIDs[T >: UUID](proID: UUID, subID: UUID) = Action.async
+    { implicit request =>
+      service.getConstructionUpdateByIDs(proID, subID).map(count => Ok(Json.toJson(count)))
+    }
+
+  def getAmenitiesAndFacility = Action.async { implicit request =>
     service.getAmenitiesAndFacility.map(count => Ok(Json.toJson(count)))
   }
+
+  def getAmenitiesAndFacilityByIDs[T >: UUID](proID: UUID, subID: UUID) = Action.async
+    { implicit request =>
+      service.getAmenitiesAndFacilityByIDs(proID, subID).map(count => Ok(Json.toJson(count)))
+    }
 
   def addSocialMedia = SecureUserAction.async(parse.multipartFormData) { implicit request =>
     FormValidations.addSocialMediaForm.bindFromRequest.fold(
