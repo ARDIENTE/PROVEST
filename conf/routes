@@ -21,6 +21,7 @@ GET         /auth/logout                    controllers.HomeController.logout
 
 #UserAuth0 page
 GET         /main                           controllers.UserAuth0Controller.main
+GET         /Forbidden/page                 controllers.UserAuth0Controller.forbidden
 
 
 # SocialMedia

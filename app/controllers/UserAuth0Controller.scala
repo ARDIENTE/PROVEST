@@ -519,6 +519,9 @@ class UserAuth0Controller @Inject() (
       }
   }
 
+  def forbidden = Action.async { implicit request =>
+    Future.successful(Ok(views.html.error()))
+  }
 
   private def uploadImage[A >: String](
       folder: A,

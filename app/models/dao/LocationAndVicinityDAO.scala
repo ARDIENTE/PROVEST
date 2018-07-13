@@ -14,13 +14,13 @@ final class LocationAndVicinityDAO @Inject()(
   ) extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
 
-  protected class LocationAndVicinityTable(tag: Tag) extends 
+  protected class LocationAndVicinityTable(tag: Tag) extends
     Table [LocationAndVicinity](tag, "LOCATION_AND_VICINITY") {
       def id = column[UUID]("ID", O.PrimaryKey)
       def projectID = column[UUID]("PROJECT_ID")
       def subProjectID = column[UUID]("SUB_PROJECT_ID")
       def imagePath = column[String]("NAME")
-      def description = column[String]("POSITION")
+      def description = column[String]("DESCRIPTION")
       def createdAt = column[Instant]("CREATED_AT")
 
       def * = (
