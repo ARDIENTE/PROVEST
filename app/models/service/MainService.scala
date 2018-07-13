@@ -27,15 +27,41 @@ class MainService @Inject()(
   ) extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
 
-  def deleteSubProject[T <: UUID](parms: T): Future[Int] =
-    for {
-      exists <- subProjectRepo.exists(parms)
+  def getSocialMedia: Future[Seq[SocialMedia]] =
+    socialMediaRepo.get
 
-      delete <- {
-        if(!exists) subProjectRepo.delete(parms)
-        else Future.successful(0)
-      }
-    } yield delete
+  def getSalesAndMarketing: Future[Seq[SalesAndMarketing]] =
+    salesAndMarketingRepo.get
+
+  def getProject: Future[Seq[Project]] =
+    projectRepo.get
+
+  def getSubProject: Future[Seq[SubProject]] =
+    subProjectRepo.get
+
+  def getPerspectiveAndFloorPlan: Future[Seq[PerspectiveAndFloorPlan]] =
+    perspectiveAndFloorPlanRepo.get
+
+  def getPhotoAndVideoGallery: Future[Seq[PhotoAndVideoGallery]] =
+    photoAndVideoGalleryRepo.get
+
+  def getOverView: Future[Seq[OverView]] =
+    overViewRepo.get
+
+  def getLocationAndVicinity: Future[Seq[LocationAndVicinity]] =
+    locationAndVicinityRepo.get
+
+  def getEmail: Future[Seq[Email]] =
+    emailRepo.get
+
+  def getContactProject: Future[Seq[ContactProject]] =
+    contactProjectRepo.get
+
+  def getConstructionUpdate: Future[Seq[ConstructionUpdate]] =
+    constructionUpdateRepo.get
+
+  def getAmenitiesAndFacility: Future[Seq[AmenitiesAndFacility]] =
+    amenitiesAndFacilityRepo.get
 
   def removeSubProject[T <: UUID](parms: T): Future[Int] =
     for {

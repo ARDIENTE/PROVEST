@@ -14,6 +14,7 @@ import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.libs.Files.TemporaryFile
 import play.api.data.validation._
+import play.api.libs.json._
 import play.api.i18n.{ I18nSupport, MessagesApi }
 import play.core.parsers.Multipart.FileInfo
 import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
@@ -27,88 +28,61 @@ class UserAuth0Controller @Inject() (
   val pageMetaApi: PageMetaApi,
   implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport with PageMetaSupport {
-  private def addLocAndVacinityForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
-      "description"     ->  nonEmptyText,
-      "created_at"      ->  ignored(Instant.now)))
-  private def addAmenitiesAndFacilityForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
-      "title"           ->  nonEmptyText,
-      "description"     ->  text,
-      "created_at"      ->  ignored(Instant.now)))
-  private def addConstructionUpdateForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
-      "title"     ->  nonEmptyText,
-      "created_at"      ->  ignored(Instant.now)))
-  private def addContactProjectForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
-      "name"            ->  nonEmptyText,
-      "position"        ->  nonEmptyText,
-      "number"          ->  nonEmptyText,
-      "created_at"      ->  ignored(Instant.now)))
-  private def addEmailForm = Form(mapping(
-      "id"              ->  ignored(UUID.randomUUID),
-      "title"           ->  nonEmptyText,
-      "mail"            ->  email,
-      "created_at"      ->  ignored(Instant.now)
-    )(Email.apply)(Email.unapply))
-  private def addOverViewForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
-      "total_land_area" ->  of[Double],
-      "phase"           ->  number,
-      "status"          ->  nonEmptyText,
-      "address"         ->  nonEmptyText,
-      "map_URL"         ->  text,
-      "created_at"      ->  ignored(Instant.now)))
-  private def addPhotoGalleryForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
-      "is_video"        ->  ignored(false),
-      "title"           ->  nonEmptyText,
-      "created_at"      ->  ignored(Instant.now)))
-  private def addVideoGalleryForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
-      "is_video"        ->  ignored(false),
-      "URL"             ->  nonEmptyText,
-      "title"           ->  nonEmptyText,
-      "created_at"      ->  ignored(Instant.now)))
-  private def addPerspectiveAndFloorPlanForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
-      "title"           ->  nonEmptyText,
-      "created_at"      ->  ignored(Instant.now)))
-  private def addProjectForm = Form(mapping(
-      "id"              ->  ignored(UUID.randomUUID),
-      "name"            ->  nonEmptyText
-    )(Project.apply)(Project.unapply))
-  private def addSubProjectForm = Form(mapping(
-      "id"              ->  ignored(UUID.randomUUID),
-      "name"            ->  nonEmptyText
-    )(SubProject.apply)(SubProject.unapply))
-  private def addSalesAndMarketingForm = Form(mapping(
-      "id"              ->  ignored(UUID.randomUUID),
-      "title"           ->  nonEmptyText,
-      "number"          ->  nonEmptyText,
-      "created_at"      ->  ignored(Instant.now)
-    )(SalesAndMarketing.apply)(SalesAndMarketing.unapply))
-  private def addSocialMediaForm = Form(mapping(
-      "id"              ->  ignored(UUID.randomUUID),
-      "URL"             ->  text,
-      "title"           ->  nonEmptyText
-    )(SocialMedia.apply)(SocialMedia.unapply))
 
   def main = SecureUserAction.async { implicit request =>
     Future.successful(Ok(views.html.main(routes.HomeController.logout)))
   }
 
+  def getSocialMedia = SecureUserAction.async { implicit request =>
+    service.getSocialMedia.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getSalesAndMarketing = SecureUserAction.async { implicit request =>
+    service.getSalesAndMarketing.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getProject = SecureUserAction.async { implicit request =>
+    service.getProject.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getSubProject = SecureUserAction.async { implicit request =>
+    service.getSubProject.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getPerspectiveAndFloorPlan = SecureUserAction.async { implicit request =>
+    service.getPerspectiveAndFloorPlan.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getPhotoAndVideoGallery = SecureUserAction.async { implicit request =>
+    service.getPhotoAndVideoGallery.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getOverView = SecureUserAction.async { implicit request =>
+    service.getOverView.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getLocationAndVicinity = SecureUserAction.async { implicit request =>
+    service.getLocationAndVicinity.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getEmail = SecureUserAction.async { implicit request =>
+    service.getEmail.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getContactProject = SecureUserAction.async { implicit request =>
+    service.getContactProject.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getConstructionUpdate = SecureUserAction.async { implicit request =>
+    service.getConstructionUpdate.map(count => Ok(Json.toJson(count)))
+  }
+
+  def getAmenitiesAndFacility = SecureUserAction.async { implicit request =>
+    service.getAmenitiesAndFacility.map(count => Ok(Json.toJson(count)))
+  }
+
   def addSocialMedia = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addSocialMediaForm.bindFromRequest.fold(
+    FormValidations.addSocialMediaForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { result =>
         service
@@ -123,7 +97,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addSalesAndMarketing = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addSalesAndMarketingForm.bindFromRequest.fold(
+    FormValidations.addSalesAndMarketingForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { result =>
         service
@@ -139,7 +113,7 @@ class UserAuth0Controller @Inject() (
 
 
   def addSubProject = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addSubProjectForm.bindFromRequest.fold(
+    FormValidations.addSubProjectForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       result => {
         service
@@ -154,7 +128,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addProject = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addProjectForm.bindFromRequest.fold(
+    FormValidations.addProjectForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       result => {
         service
@@ -169,7 +143,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addPerspectiveAndFloorPlan = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addPerspectiveAndFloorPlanForm.bindFromRequest.fold(
+    FormValidations.addPerspectiveAndFloorPlanForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d) =>
         (for {
@@ -196,7 +170,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addPhotoGallery = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addPhotoGalleryForm.bindFromRequest.fold(
+    FormValidations.addPhotoGalleryForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d, e) =>
         (for {
@@ -223,7 +197,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addVideoGallery = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addVideoGalleryForm.bindFromRequest.fold(
+    FormValidations.addVideoGalleryForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d, e, f) =>
         service
@@ -238,7 +212,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addOverView = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addOverViewForm.bindFromRequest.fold(
+    FormValidations.addOverViewForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d, e, f, g, h) =>
         service
@@ -253,7 +227,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addEmail = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addEmailForm.bindFromRequest.fold(
+    FormValidations.addEmailForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { result =>
         service
@@ -268,7 +242,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addContactProject = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addContactProjectForm.bindFromRequest.fold(
+    FormValidations.addContactProjectForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d, e, f) =>
         service
@@ -283,7 +257,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addConstructionUpdate = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addConstructionUpdateForm.bindFromRequest.fold(
+    FormValidations.addConstructionUpdateForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d) =>
         (for {
@@ -310,7 +284,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addLocationAndVicinity = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addLocAndVacinityForm.bindFromRequest.fold(
+    FormValidations.addLocAndVacinityForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d) =>
         (for {
@@ -337,7 +311,7 @@ class UserAuth0Controller @Inject() (
   }
 
   def addAmenitiesAndFacility = SecureUserAction.async(parse.multipartFormData) { implicit request =>
-    addAmenitiesAndFacilityForm.bindFromRequest.fold(
+    FormValidations.addAmenitiesAndFacilityForm.bindFromRequest.fold(
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d, e) =>
         (for {
