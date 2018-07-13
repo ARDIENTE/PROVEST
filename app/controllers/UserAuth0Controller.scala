@@ -363,6 +363,163 @@ class UserAuth0Controller @Inject() (
       })
   }
 
+  def removeSocialMedia(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removeSocialMedia(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removeSalesAndMarketing(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removeSalesAndMarketing(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removeSubProject(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removeSubProject(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removeProject(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removeProject(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removePerspectiveAndFloorPlan(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removePerspectiveAndFloorPlan(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removePhotoAndVideoGallery(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removePhotoAndVideoGallery(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removeOverView(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removeOverView(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removeEmail(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removeEmail(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removeContactProject(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removeContactProject(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removeConstructionUpdate(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removeConstructionUpdate(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removeLocationAndVicinity(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removeLocationAndVicinity(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+  def removeAmenitiesAndFacility(id: UUID) = SecureUserAction.async { implicit request =>
+    service
+      .removeAmenitiesAndFacility(id)
+      .map { count =>
+        if (count == 0)
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("error" -> "Something went wrong.")
+        else
+          Redirect(routes.UserAuth0Controller.main)
+              .flashing("info" -> "Success.")
+      }
+  }
+
+
   private def uploadImage[A >: String](
       folder: A,
       request: Request[MultipartFormData[TemporaryFile]]):

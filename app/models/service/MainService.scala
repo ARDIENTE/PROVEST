@@ -1,6 +1,7 @@
 package models.service
 
 import javax.inject.{ Inject, Singleton }
+import java.util.UUID
 import scala.concurrent.{ ExecutionContext, Future }
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import models.domain._
@@ -25,6 +26,147 @@ class MainService @Inject()(
     implicit val ec: ExecutionContext
   ) extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
+
+  def deleteSubProject[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeSubProject[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeSocialMedia[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeSalesAndMarketing[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeProject[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removePerspectiveAndFloorPlan[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removePhotoAndVideoGallery[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeOverView[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeLocationAndVicinity[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeEmail[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeContactProject[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeConstructionUpdate[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeAccount[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
+  def removeAmenitiesAndFacility[T <: UUID](parms: T): Future[Int] =
+    for {
+      exists <- subProjectRepo.exists(parms)
+
+      delete <- {
+        if(!exists) subProjectRepo.delete(parms)
+        else Future.successful(0)
+      }
+    } yield delete
+
 
   def createSubProject[T <: SubProject](parms: T): Future[Int] =
     for {
