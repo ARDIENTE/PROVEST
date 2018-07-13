@@ -27,7 +27,7 @@ POST  /amenities&facility/add             controllers.UserAuth0Controller.addAme
 
 
 #locationVacinity
-POST  /location&vacinity/add              controllers.UserAuth0Controller.addLocationVacinity
+POST  /location&vicinity/add              controllers.UserAuth0Controller.addLocationAndVicinity
 #POST    /api/mridResetOf/:id              controllers.HomeController.resetAccountMrid(id: UUID)
 #PATCH   /groups/:id                       controllers.HomeController.update(id: UUID)
 

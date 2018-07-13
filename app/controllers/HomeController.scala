@@ -35,20 +35,20 @@ class HomeController @Inject() (
   private val verifyLongText = "Above 20 characters not allowed."
 
   private def newAccountForm = Form(mapping(
-    "id" -> ignored(java.util.UUID.randomUUID),
-    "account_name" -> nonEmptyText,
-    "password" -> nonEmptyText,
-    "address" -> nonEmptyText,
-    "map_URL" -> nonEmptyText,
-    "image_path" -> default(text, ""),
-    "created_at" -> ignored(java.time.Instant.now))
+    "id"                ->  ignored(java.util.UUID.randomUUID),
+    "account_name"      ->  nonEmptyText,
+    "password"          ->  nonEmptyText,
+    "address"           ->  nonEmptyText,
+    "map_URL"           ->  nonEmptyText,
+    "image_path"        ->  default(text, ""),
+    "created_at"        ->  ignored(java.time.Instant.now))
   (Account.apply)(Account.unapply))
 
   private val loginForm = Form(mapping(
-    "account_name" -> nonEmptyText
+    "account_name"      ->  nonEmptyText
       .verifying(verifyShortText,   char => lengthIsGreaterThanNCharacters(char, 2))
       .verifying(verifyLongText,    char => lengthIsLessThanNCharacters(char, 20)),
-    "password" -> nonEmptyText
+    "password"          ->  nonEmptyText
       .verifying(verifyShortText,   char => lengthIsGreaterThanNCharacters(char, 2))
       .verifying(verifyLongText,    char => lengthIsLessThanNCharacters(char, 30))
   )(UserAuth0.apply)(UserAuth0.unapply))

@@ -13,13 +13,23 @@ body {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
+  background-image: url('../images/default/bg-signup-2.jpg');
+  background-color: #000;
+  background-repeat: no-repeat; 
   padding-top: 40px;
   padding-bottom: 40px;
-  background-image: url('../images/default/bg-signup-2.jpg');
   background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+
+  @media only screen and (max-width: 1395px) {
+    background-size: auto;
+  } 
+
+  @media only screen and (min-width: 1395px) {
+    background-size: cover;
+    
+  }
 }
+
 
 .form-signin {
   width: 100%;

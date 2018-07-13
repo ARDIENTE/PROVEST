@@ -1,6 +1,8 @@
 <sign-up>
   <form  method="POST" action="../auth/user/create">
-    <sign-logo></sign-logo>
+    <div class="form-label-group">
+      <sign-logo></sign-logo>
+    </div>
 
     <div class="form-label-group">
       <input type="text" id="account" name="account_name" class="form-control" placeholder="Account" required>
@@ -22,13 +24,15 @@
       <label for="inputMapLocation">Map location URL</label>
     </div>
 
-    <button class="btn btn-lg btn-primary btn-block" id="btn-sign-up" type="submit">Submit</button>
-    <p class="mt-5 mb-3 text-muted text-center">
-      <span class="nav-link" > Already on <i>Provest</i>?
-        <a id="register-link" href="/auth/sign-in">Sign in</a>
-      </span>
-      &copy; 2017-2018
-    </p>
+    <div class="form-label-group">
+      <button class="btn btn-lg btn-primary btn-block" id="btn-sign-up" type="submit">Submit</button>
+      <p class="mt-5 mb-3 text-muted text-center">
+        <span class="nav-link" > Already on <i>Provest</i>?
+          <a id="register-link" href="/auth/sign-in">Sign in</a>
+        </span>
+        &copy; 2017-2018
+      </p>
+    </div>
   </form>
   <script>
   var self = this
