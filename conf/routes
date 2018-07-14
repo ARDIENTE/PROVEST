@@ -70,27 +70,27 @@ DELETE      /overview/delete/:id            controllers.UserAuth0Controller.remo
 
 
 # Email
-GET         /company/email/all              controllers.UserAuth0Controller.getLocationAndVicinity
+GET         /company/email/all              controllers.UserAuth0Controller.getEmail
 POST        /company/email/add              controllers.UserAuth0Controller.addEmail
 DELETE      /company/email/delete/:id       controllers.UserAuth0Controller.removeEmail(id: UUID)
 
 
 # ContactProject
-GET         /contact/project/all            controllers.UserAuth0Controller.getEmail
+GET         /contact/project/all            controllers.UserAuth0Controller.getContactProject
 POST        /contact/project/add            controllers.UserAuth0Controller.addContactProject
 DELETE      /contact/project/delete/:id     controllers.UserAuth0Controller.removeContactProject(id: UUID)
 
 
 # ConstructionUpdate
-GET         /construction/update/all        controllers.UserAuth0Controller.getContactProject
-GET         /construction/update/ids/:a/:b  controllers.UserAuth0Controller.getContactProjectByIDs(a: UUID, b: UUID)
+GET         /construction/update/all        controllers.UserAuth0Controller.getConstructionUpdate
+GET         /construction/update/ids/:a/:b  controllers.UserAuth0Controller.getConstructionUpdateByIDs(a: UUID, b: UUID)
 POST        /construction/update/add        controllers.UserAuth0Controller.addConstructionUpdate
 DELETE      /construction/update/delete/:id controllers.UserAuth0Controller.removeConstructionUpdate(id: UUID)
 
 
 # LocationAndVicinity
-GET         /location&vicinity/all          controllers.UserAuth0Controller.getConstructionUpdate
-GET         /location&vicinity/ids/:a/:b    controllers.UserAuth0Controller.getConstructionUpdateByIDs(a: UUID, b: UUID)
+GET         /location&vicinity/all          controllers.UserAuth0Controller.getLocationAndVicinity
+GET         /location&vicinity/ids/:a/:b    controllers.UserAuth0Controller.getLocationAndVicinityByIDs(a: UUID, b: UUID)
 POST        /location&vicinity/add          controllers.UserAuth0Controller.addLocationAndVicinity
 DELETE      /location&vicinity/delete/:id   controllers.UserAuth0Controller.removeLocationAndVicinity(id: UUID)
 

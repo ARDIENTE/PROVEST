@@ -541,10 +541,11 @@ class UserAuth0Controller @Inject() (
         if (!request.body.files.isEmpty)
           request.body.files.map { file =>
             val random = Random.alphanumeric.take(5).mkString("")
-            val newPath = s"public/images/${folder}/${random + file.filename}"
+            val diskPath = s"public/images/${folder}/${random + file.filename}"
+            val publicPath = s"../assets/images/${folder}/${random + file.filename}"
             try {
-              file.ref.moveTo(new File(newPath))
-              ("Done", newPath)
+              file.ref.moveTo(new File(diskPath))
+              ("Done", publicPath)
             } catch {
               case _: Exception => ("Error", file.filename)
             }

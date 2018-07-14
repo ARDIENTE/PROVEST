@@ -1,6 +1,10 @@
 <sign-in>
   <form  method="POST" action="../auth/user/login">
-    <sign-logo></sign-logo>
+    <sign-logo lists={lists}></sign-logo>
+    <!-- <p each={list in lists}>
+      <b>{ list.description }</b>
+      <img src="{list.image_path}" width="100" class="img-fluid" alt="Responsive image">
+    </p> -->
     <div
         class="alert alert-danger alert-dismissible fade show"
         role="alert"
@@ -47,7 +51,8 @@
   </form>
   <script>
   var self = this,
-    helper = window.Helpers.factory()
+    helper = window.Helpers.factory(),
+    lists = [];
 
     autoClose() {
       window.setTimeout(function() {
@@ -58,7 +63,15 @@
       }, 3000);
     }
 
+    getVicinity() {
+      helper.getLocationAndVicinity().then(function(res) {
+        self.lists = res;
+        self.update();
+      });
+    }
+
     this.on('mount', function() {
+      self.getVicinity()
       helper.setTitle({ title: 'Sign in' })
     })
 
