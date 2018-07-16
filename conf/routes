@@ -3,30 +3,119 @@
 # ~~~~
 
 # A home page
+<<<<<<< HEAD
 GET   /                                   controllers.HomeController.index
 GET   /dashboard                          controllers.HomeController.index
 GET   /about-us                           controllers.HomeController.index
 GET   /contact                            controllers.HomeController.index
 GET   /features                           controllers.HomeController.index
 GET   /main                               controllers.HomeController.main
+=======
+GET         /                               controllers.HomeController.index
+GET         /dashboard                      controllers.HomeController.index
+GET         /contact                        controllers.HomeController.index
+GET         /features                       controllers.HomeController.index
+>>>>>>> b51cdf30741e0e83b913b060779d41ba81d12532
 
 # WebSocket Request
-GET   /ws                                 controllers.HomeController.ws
+GET         /ws                             controllers.HomeController.ws
 
 # Login
-GET   /auth                               controllers.HomeController.auth
-GET   /auth/sign-up                       controllers.HomeController.auth
-GET   /auth/sign-in                       controllers.HomeController.auth
-POST  /auth/user/create                   controllers.HomeController.createUser
-POST  /auth/user/login                    controllers.HomeController.loginUser
-GET   /auth/logout                        controllers.HomeController.logout
+GET         /auth                           controllers.HomeController.auth
+GET         /auth/sign-up                   controllers.HomeController.auth
+GET         /auth/sign-in                   controllers.HomeController.auth
+POST        /auth/user/create               controllers.HomeController.createUser
+POST        /auth/user/login                controllers.HomeController.loginUser
+GET         /auth/logout                    controllers.HomeController.logout
 
-#main page
+#UserAuth0 page
+GET         /main                           controllers.UserAuth0Controller.main
+GET         /Forbidden/page                 controllers.UserAuth0Controller.forbidden
 
+# SocialMedia
+GET         /social/media/all               controllers.UserAuth0Controller.getSocialMedia
+POST        /social/media/add               controllers.UserAuth0Controller.addSocialMedia
+DELETE      /social/media/delete/:id        controllers.UserAuth0Controller.removeSocialMedia(id: UUID)
+
+
+# SalesAndMarketing
+GET         /sales&marketing/all            controllers.UserAuth0Controller.getSalesAndMarketing
+POST        /sales&marketing/add            controllers.UserAuth0Controller.addSalesAndMarketing
+DELETE      /sales&marketing/delete/:id     controllers.UserAuth0Controller.removeSalesAndMarketing(id: UUID)
+
+
+# SubProject
+GET         /sub/project/all                controllers.UserAuth0Controller.getSubProject
+POST        /sub/project/add                controllers.UserAuth0Controller.addSubProject
+DELETE      /sub/project/delete/:id         controllers.UserAuth0Controller.removeSubProject(id: UUID)
+
+
+# Project
+GET         /project/all                    controllers.UserAuth0Controller.getProject
+POST        /project/add                    controllers.UserAuth0Controller.addProject
+DELETE      /project/delete/:id             controllers.UserAuth0Controller.removeProject(id: UUID)
+
+
+# PerspectiveAndFloorPlan
+GET         /perspective&floor/plan/all     controllers.UserAuth0Controller.getPerspectiveAndFloorPlan
+GET         /perspective&floor/plan/ids/:a/:b   controllers.UserAuth0Controller.getPerspectiveAndFloorPlanByIDs(a: UUID, b: UUID)
+POST        /perspective&floor/plan/add     controllers.UserAuth0Controller.addPerspectiveAndFloorPlan
+DELETE      /perspective&floor/plan/delete/:id  controllers.UserAuth0Controller.removePerspectiveAndFloorPlan(id: UUID)
+
+
+# PhotoGallery
+GET         /photo&video/gallery/all        controllers.UserAuth0Controller.getPhotoAndVideoGallery
+GET         /photo&video/gallery/ids/:a/:b  controllers.UserAuth0Controller.getPhotoVideoGalleryByIDs(a: UUID, b: UUID)
+POST        /photo/gallery/add              controllers.UserAuth0Controller.addPhotoGallery
+POST        /video/gallery/add              controllers.UserAuth0Controller.addVideoGallery
+DELETE      /photo&video/gallery/delete/:id controllers.UserAuth0Controller.removePhotoAndVideoGallery(id: UUID)
+
+
+# OverView
+GET         /overview/all                   controllers.UserAuth0Controller.getOverView
+GET         /overview/ids/:a/:b             controllers.UserAuth0Controller.getOverViewByIDs(a: UUID, b: UUID)
+POST        /overview/add                   controllers.UserAuth0Controller.addOverView
+DELETE      /overview/delete/:id            controllers.UserAuth0Controller.removeOverView(id: UUID)
+
+
+# Email
+GET         /company/email/all              controllers.UserAuth0Controller.getEmail
+POST        /company/email/add              controllers.UserAuth0Controller.addEmail
+DELETE      /company/email/delete/:id       controllers.UserAuth0Controller.removeEmail(id: UUID)
+
+
+# ContactProject
+GET         /contact/project/all            controllers.UserAuth0Controller.getContactProject
+POST        /contact/project/add            controllers.UserAuth0Controller.addContactProject
+DELETE      /contact/project/delete/:id     controllers.UserAuth0Controller.removeContactProject(id: UUID)
+
+
+# ConstructionUpdate
+GET         /construction/update/all        controllers.UserAuth0Controller.getConstructionUpdate
+GET         /construction/update/ids/:a/:b  controllers.UserAuth0Controller.getConstructionUpdateByIDs(a: UUID, b: UUID)
+POST        /construction/update/add        controllers.UserAuth0Controller.addConstructionUpdate
+DELETE      /construction/update/delete/:id controllers.UserAuth0Controller.removeConstructionUpdate(id: UUID)
+
+
+# LocationAndVicinity
+GET         /location&vicinity/all          controllers.UserAuth0Controller.getLocationAndVicinity
+GET         /location&vicinity/ids/:a/:b    controllers.UserAuth0Controller.getLocationAndVicinityByIDs(a: UUID, b: UUID)
+POST        /location&vicinity/add          controllers.UserAuth0Controller.addLocationAndVicinity
+DELETE      /location&vicinity/delete/:id   controllers.UserAuth0Controller.removeLocationAndVicinity(id: UUID)
+
+
+# AmenitiesAndFacility
+GET         /amenities&facility/all         controllers.UserAuth0Controller.getAmenitiesAndFacility
+GET         /amenities&facility/ids/:a/:b   controllers.UserAuth0Controller.getAmenitiesAndFacilityByIDs(a: UUID, b: UUID)
+POST        /amenities&facility/add         controllers.UserAuth0Controller.addAmenitiesAndFacility
+DELETE      /amenities&facility/delete/:id  controllers.UserAuth0Controller.removeAmenitiesAndFacility(id: UUID)
+
+
+#locationVacinity
 #POST    /api/mridResetOf/:id              controllers.HomeController.resetAccountMrid(id: UUID)
 #PATCH   /groups/:id                       controllers.HomeController.update(id: UUID)
 
 # Web jars asset
-GET   /assets/libs/*file                  controllers.WebJarAssets.at(file)
+GET         /assets/libs/*file              controllers.WebJarAssets.at(file)
 # Map static resources from the /public folder to the /assets URL path
-GET   /assets/*file                       controllers.Assets.at(path="/public", file)
+GET         /assets/*file                   controllers.Assets.at(path="/public", file: String)

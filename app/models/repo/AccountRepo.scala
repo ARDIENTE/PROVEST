@@ -12,8 +12,8 @@ import models.domain.Account
 class AccountRepo @Inject()(
     dao: models.dao.AccountDAO,
     protected val dbConfigProvider: DatabaseConfigProvider,
-    implicit val ec: ExecutionContext)
-  extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
+    implicit val ec: ExecutionContext
+  ) extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
 
   def exists(accountName: String): Future[Boolean] =
@@ -41,5 +41,5 @@ class AccountRepo @Inject()(
     db.run(dao.Query(accountName).delete)
 
   def update[T <: Account](acc: T): Future[Int] =
-    db.run(dao.Query(acc.idAccountRef).update(acc))
+    db.run(dao.Query(acc.id).update(acc))
 }

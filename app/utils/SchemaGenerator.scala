@@ -7,13 +7,37 @@ import models.dao._
 @Singleton
 class SchemaGenerator @Inject()(
     accountDao: AccountDAO,
+    amenitiesAndFacilityDao: AmenitiesAndFacilityDAO,
+    constructionUpdateDao: ConstructionUpdateDAO,
+    contactProjectDao: ContactProjectDAO,
+    emailDao: EmailDAO,
+    locationAndVicinityDao: LocationAndVicinityDAO,
+    overViewDao: OverViewDAO,
+    photoAndVideoGalleryDao: PhotoAndVideoGalleryDAO,
+    perspectiveAndFloorPlanDao: PerspectiveAndFloorPlanDAO,
+    projectDao: ProjectDAO,
+    salesAndMarketingDao: SalesAndMarketingDAO,
+    socialMediaDao: SocialMediaDAO,
+    subProjectDao: SubProjectDAO,
     val dbConfigProvider: DatabaseConfigProvider)
   extends HasDatabaseConfigProvider[utils.db.PostgresDriver] {
   import driver.api._
 
   def createDDLScript() = {
     val schemas =
-      accountDao.Query.schema
+      accountDao.Query.schema ++
+      amenitiesAndFacilityDao.Query.schema ++
+      constructionUpdateDao.Query.schema ++
+      contactProjectDao.Query.schema ++
+      emailDao.Query.schema ++
+      locationAndVicinityDao.Query.schema ++
+      overViewDao.Query.schema ++
+      photoAndVideoGalleryDao.Query.schema ++
+      perspectiveAndFloorPlanDao.Query.schema ++
+      projectDao.Query.schema ++
+      salesAndMarketingDao.Query.schema ++
+      socialMediaDao.Query.schema ++
+      subProjectDao.Query.schema
 
     val writer = new java.io.PrintWriter("target/schema.sql")
     writer.write("# --- !Ups\n\n")

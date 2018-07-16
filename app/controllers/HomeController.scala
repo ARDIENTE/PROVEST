@@ -1,8 +1,6 @@
 package controllers
 
-import javax.inject._
-import java.time.Instant
-import java.util.UUID
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -16,10 +14,10 @@ import play.api.data.Forms._
 import play.api.libs.json._
 import play.api.libs.streams._
 import play.api.i18n.{ I18nSupport, MessagesApi }
+import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 import actors._
 import models.domain._
 import models.service._
-import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 
 @Singleton
 class HomeController @Inject() (
@@ -36,19 +34,21 @@ class HomeController @Inject() (
   private val verifyShortText = "Must be 3 to 20 characters allowed."
   private val verifyLongText = "Above 20 characters not allowed."
 
-  private def accountForm = Form(mapping(
-      "id_account_ref" -> ignored(UUID.randomUUID),
-      "account_name" -> nonEmptyText,
-      "password" -> nonEmptyText,
-      "email" -> nonEmptyText,
-      "created_at" -> ignored(Instant.now))
+  private def newAccountForm = Form(mapping(
+    "id"                ->  ignored(java.util.UUID.randomUUID),
+    "account_name"      ->  nonEmptyText,
+    "password"          ->  nonEmptyText,
+    "address"           ->  nonEmptyText,
+    "map_URL"           ->  nonEmptyText,
+    "image_path"        ->  default(text, ""),
+    "created_at"        ->  ignored(java.time.Instant.now))
   (Account.apply)(Account.unapply))
 
   private val loginForm = Form(mapping(
-    "account_name" -> nonEmptyText
+    "account_name"      ->  nonEmptyText
       .verifying(verifyShortText,   char => lengthIsGreaterThanNCharacters(char, 2))
       .verifying(verifyLongText,    char => lengthIsLessThanNCharacters(char, 20)),
-    "password" -> nonEmptyText
+    "password"          ->  nonEmptyText
       .verifying(verifyShortText,   char => lengthIsGreaterThanNCharacters(char, 2))
       .verifying(verifyLongText,    char => lengthIsLessThanNCharacters(char, 30))
   )(UserAuth0.apply)(UserAuth0.unapply))
@@ -73,12 +73,8 @@ class HomeController @Inject() (
     )
   }
 
-  def main = SecureUserAction.async { implicit request =>
-    Future.successful(Ok(views.html.main(routes.HomeController.logout)))
-  }
-
   def createUser = Action.async { implicit request =>
-    accountForm.bindFromRequest.fold(
+    newAccountForm.bindFromRequest.fold(
       formWithErrors => Future.successful(Redirect(routes.HomeController.auth())),
       account => {
         accountService
@@ -89,21 +85,23 @@ class HomeController @Inject() (
 
   def loginUser = Action.async { implicit request =>
     loginForm.bindFromRequest.fold(
-      formWithErrors =>
+      formWithErrors => {
         Future.successful(
           Ok(views.html.auth(loginForm, routes.HomeController.loginUser)
-        )),
-      login =>
+        ))
+      },
+      login => {
         accountService
           .checkAccount(login.accountName, login.password)
           .map(
             if(_)
-              Redirect(routes.HomeController.main())
+              Redirect(routes.UserAuth0Controller.main())
                 .flashing("info" -> "You are logged in.")
                 .withSession(utils.UserAuth.SESSION_USERNAME_KEY -> login.accountName)
             else
               Redirect(routes.HomeController.auth())
                 .flashing("error" -> "Invalid username or password."))
+      }
     )
   }
 

@@ -13,10 +13,23 @@ body {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
+  background-image: url('../images/default/bg-signup-2.jpg');
+  background-color: #000;
+  background-repeat: no-repeat;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
+  background-position: center;
+
+  @media only screen and (max-width: 1395px) {
+    background-size: auto;
+  }
+
+  @media only screen and (min-width: 1395px) {
+    background-size: cover;
+
+  }
 }
+
 
 .form-signin {
   width: 100%;
@@ -82,5 +95,13 @@ body {
 }
 
 #register-link {
-  color: black;
+  color: #fff;
+}
+
+.form-label-group, #btn-sign-up, #btn-sign-in {
+  opacity: 0.8;
+}
+
+.text-muted {
+  color: #fff9!important;
 }

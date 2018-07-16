@@ -1,0 +1,23 @@
+@()(
+    implicit header: RequestHeader,
+    flash: Flash,
+    messages: Messages,
+    pm: PageMeta,
+    wja: WebJarAssets
+  )
+
+@helper.base {
+  <link href="@routes.Assets.at("styles/error.css")" rel="stylesheet">
+} {
+  <div class="container">
+    <h4 class="alert-heading">403 - FORBIDDEN
+      <!-- <i class="fa fa-cog fa-spin fa-2x fa-fw" aria-hidden="true"></i> -->
+      <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i>
+      <span class="sr-only">Saving. Hang tight!</span>
+    </h4>
+    <hr>
+    <h2 class="mb-0">You're not authorized in this page.</h2>
+  </div>
+} {
+
+}

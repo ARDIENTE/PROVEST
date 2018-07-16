@@ -12,6 +12,18 @@
   <link href="@routes.Assets.at("styles/main.css")" rel="stylesheet">
 } {
   <div id="content"></div>
+  @helper.form(action = routes.UserAuth0Controller.addLocationAndVicinity, 'enctype -> "multipart/form-data" ) {
+    <p>13a3d206-b5f3-420f-8b8d-b3ff56860691</p>
+    <input type="file" name="fileUpload" multiple>
+    <input type="text" name="project_id" placeholder="project id">
+    <input type="text" name="sub_project_id" placeholder="classification">
+    <input type="text" name="description" placeholder="description">
+    <p><input type="submit" value="Upload"></p>
+    <p>@flash.get("error") </p>
+
+    <p>@flash.get("info")</p>
+  }
+
   <a href="#" onclick="logout('@logoutUrl')">logout</a>
 } {
   <script src="@routes.Assets.at("comps/main/main-page.js")"></script>
