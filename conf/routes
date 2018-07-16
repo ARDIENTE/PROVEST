@@ -6,6 +6,7 @@
 <<<<<<< HEAD
 GET   /                                   controllers.HomeController.index
 GET   /dashboard                          controllers.HomeController.index
+GET   /about-us                           controllers.HomeController.index
 GET   /contact                            controllers.HomeController.index
 GET   /features                           controllers.HomeController.index
 GET   /main                               controllers.HomeController.main
