@@ -1,9 +1,7 @@
 <sign-in>
   <form  method="POST" action="../auth/user/login">
+    <sign-logo></sign-logo>
 
-    <div class="form-label-group">
-      <sign-logo></sign-logo>
-    </div>
     <div class="form-label-group" if={opts.mess != ''}>
       <div class="alert alert-danger" role="alert"> {opts.mess} </div>
     </div>

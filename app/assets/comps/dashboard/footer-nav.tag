@@ -1,6 +1,9 @@
-<footer class="py-5 bg-dark">
-  <div class="container">
-    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+<footer>
+  <div class="inner">
+    <p>Example template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">at mdo</a>.</p>
   </div>
-  <!-- /.container -->
+  <script>
+    console.log(opts.sub)
+  </script>
 </footer>
+
