@@ -11,6 +11,8 @@ riot.route '/*', (sub) ->
   switch sub
     when 'dashboard'
       riot.mount '#content', 'dashboard'
+    when 'about-us'
+      riot.mount '#content', 'about-us'
     when 'contact'
       riot.mount '#content', 'contact'
     when 'features'
