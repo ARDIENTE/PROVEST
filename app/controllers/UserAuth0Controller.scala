@@ -17,7 +17,6 @@ import play.api.data.validation._
 import play.api.libs.json._
 import play.api.i18n.{ I18nSupport, MessagesApi }
 import play.core.parsers.Multipart.FileInfo
-import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 import models.domain._
 import models.service.MainService
 
@@ -25,9 +24,8 @@ import models.service.MainService
 class UserAuth0Controller @Inject() (
   service: MainService,
   val messagesApi: MessagesApi,
-  val pageMetaApi: PageMetaApi,
   implicit val wja: WebJarAssets
-) extends Controller with I18nSupport with PageMetaSupport {
+) extends Controller with I18nSupport {
 
   def main = SecureUserAction.async { implicit request =>
     Future.successful(Ok(views.html.main(routes.HomeController.logout)))

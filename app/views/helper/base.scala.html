@@ -1,4 +1,4 @@
-@(header: Html = Html(""))(content: Html)(footer: Html = Html(""))(implicit requestHeader: RequestHeader, messages: Messages, pageMeta: PageMeta, wja: WebJarAssets)
+@(header: Html = Html(""))(content: Html)(footer: Html = Html(""))(implicit requestHeader: RequestHeader, messages: Messages, wja: WebJarAssets)
 <!DOCTYPE html>
 <html lang="@messages.lang.code">
 <head>
@@ -17,7 +17,6 @@
   <script src="@routes.WebJarAssets.at(wja.locate("bootstrap.js"))"></script>
   <script src="@routes.WebJarAssets.at(wja.locate("bootstrap.min.js"))"></script>
 
-  @pageMeta.toHtml
   @header
 </head>
 <body>

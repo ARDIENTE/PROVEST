@@ -14,7 +14,6 @@ import play.api.data.Forms._
 import play.api.libs.json._
 import play.api.libs.streams._
 import play.api.i18n.{ I18nSupport, MessagesApi }
-import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 import actors._
 import models.domain._
 import models.service._
@@ -25,9 +24,8 @@ class HomeController @Inject() (
   implicit val system: ActorSystem,
   implicit val materializer: Materializer,
   val messagesApi: MessagesApi,
-  val pageMetaApi: PageMetaApi,
   implicit val wja: WebJarAssets
-) extends Controller with I18nSupport with PageMetaSupport {
+) extends Controller with I18nSupport {
   import utils.UserAuth0
 
   implicit val messageFlowTransformer = MessageFlowTransformer.jsonMessageFlowTransformer[JsValue, JsValue]
