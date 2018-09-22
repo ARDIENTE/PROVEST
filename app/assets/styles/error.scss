@@ -1,0 +1,41 @@
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  background-image: url('../images/default/bg-signup-2.jpg');
+  background-color: #000;
+  background-repeat: no-repeat;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-position: center;
+  color: #fff;
+
+  @media only screen and (max-width: 1395px) {
+    background-size: auto;
+  }
+
+  @media only screen and (min-width: 1395px) {
+    background-size: cover;
+
+  }
+
+}
+.container {
+  text-align: center;
+
+  .alert-heading {
+
+    font-size: 5rem;
+    .fa {
+      color: #000;
+      opacity: 0.5;
+    }
+  }
+}

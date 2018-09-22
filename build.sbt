@@ -4,16 +4,13 @@ version := "1.0.0"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.11.11"
+// crossScalaVersions := Seq("2.11.12", "2.11.8", "2.12.6")
 
 // Dependencies
 libraryDependencies ++= Seq(
   ws,
   "com.google.inject" % "guice" % "4.1.0",
-  "com.ejisan" %% "play-pagemeta" % "1.2.1",
-  "com.ejisan" %% "play-form" % "3.0.2",
-  "com.ejisan" %% "play-i18n-js" % "1.0.0-SNAPSHOT",
-  "com.ejisan" %% "play-i18n-url" % "1.0.0-SNAPSHOT",
   "org.typelevel" %% "cats" % "0.9.0",
   "com.typesafe.slick" %% "slick" % "3.1.1",
   "com.typesafe.play" %% "play-slick" % "2.0.0",
@@ -23,6 +20,11 @@ libraryDependencies ++= Seq(
   "com.github.tminglei" %% "slick-pg" % "0.14.6",
   "com.github.tminglei" %% "slick-pg_date2" % "0.14.6",
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
+)
+
+libraryDependencies ++= Seq(
+  "io.get-coursier" %% "coursier" % "1.0.3",
+  "io.get-coursier" %% "coursier-cache" % "1.0.3"
 )
 
 // Web Jars Dependencies
@@ -39,10 +41,6 @@ ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
 // Resolvers
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
-resolvers += "Ejisan Github" at "https://ejisan.github.io/repo/"
-
-// Twirl importing classes
-TwirlKeys.templateImports += "ejisan.play.libs.PageMeta"
 
 // Sass compiler options
 sassOptions in Assets ++= Seq("--compass", "-r", "compass")

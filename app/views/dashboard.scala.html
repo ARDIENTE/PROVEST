@@ -1,0 +1,30 @@
+@()(
+  implicit header: RequestHeader,
+  messages: Messages,
+  wja: WebJarAssets
+)
+
+@helper.base {
+  <link href="@routes.Assets.at("styles/dashboard.css")" rel="stylesheet">
+  <link href="@routes.Assets.at("styles/main.css")" rel="stylesheet">
+} {
+  <div>
+    <header></header>
+
+    <main>
+      <div id="content"></div>
+    </main>
+
+    <footer>
+      <footer></footer>
+    </footer>
+  </div>
+} {
+  <script src="@routes.Assets.at("comps/dashboard.js")"></script>
+  <script src="@routes.Assets.at("comps/dashboard/about-us.js")"></script>
+  <script src="@routes.Assets.at("comps/dashboard/feature.js")"></script>
+  <script src="@routes.Assets.at("comps/dashboard/contact.js")"></script>
+  <script src="@routes.Assets.at("comps/dashboard/header-nav.js")"></script>
+  <script src="@routes.Assets.at("comps/dashboard/side-nav.js")"></script>
+  <script src="@routes.Assets.at("comps/dashboard/footer-nav.js")"></script>
+}
