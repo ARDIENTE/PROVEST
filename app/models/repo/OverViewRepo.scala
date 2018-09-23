@@ -31,8 +31,8 @@ class OverViewRepo @Inject()(
   def getByIDs(projectID: UUID, subProjectID: UUID): Future[Seq[OverView]] =
     db.run(dao.Query.filter(r => r.projectID === projectID && r.subProjectID === subProjectID).result)
 
-  def find(id: UUID): OptionT[Future, OverView] =
-    OptionT(db.run(dao.Query(id).result.headOption))
+  def find(id: UUID): Future[Option[OverView]] =
+    db.run(dao.Query(id).result.headOption)
 
   def add(params: OverView): Future[Int] =
     db.run(dao.Query += params)

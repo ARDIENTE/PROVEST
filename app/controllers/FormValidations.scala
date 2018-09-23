@@ -9,24 +9,24 @@ import models.domain._
 
 object FormValidations {
   def addLocAndVacinityForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
-      "description"     ->  nonEmptyText,
+      "project_id"      ->  nonEmptyText,
+      "sub_project_id"  ->  nonEmptyText,
+      "description"     ->  text,
       "created_at"      ->  ignored(Instant.now)))
   def addAmenitiesAndFacilityForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
+      "project_id"      ->  nonEmptyText,
+      "sub_project_id"  ->  nonEmptyText,
       "title"           ->  nonEmptyText,
       "description"     ->  text,
       "created_at"      ->  ignored(Instant.now)))
   def addConstructionUpdateForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
+      "project_id"      ->  nonEmptyText,
+      "sub_project_id"  ->  nonEmptyText,
       "title"     ->  nonEmptyText,
       "created_at"      ->  ignored(Instant.now)))
   def addContactProjectForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
+      "project_id"      ->  nonEmptyText,
+      "sub_project_id"  ->  nonEmptyText,
       "name"            ->  nonEmptyText,
       "position"        ->  nonEmptyText,
       "number"          ->  nonEmptyText,
@@ -38,8 +38,8 @@ object FormValidations {
       "created_at"      ->  ignored(Instant.now)
     )(Email.apply)(Email.unapply))
   def addOverViewForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
+      "project_id"      ->  nonEmptyText,
+      "sub_project_id"  ->  nonEmptyText,
       "total_land_area" ->  of[Double],
       "phase"           ->  number,
       "status"          ->  nonEmptyText,
@@ -47,21 +47,21 @@ object FormValidations {
       "map_URL"         ->  text,
       "created_at"      ->  ignored(Instant.now)))
   def addPhotoGalleryForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
+      "project_id"      ->  nonEmptyText,
+      "sub_project_id"  ->  nonEmptyText,
       "is_video"        ->  ignored(false),
       "title"           ->  nonEmptyText,
       "created_at"      ->  ignored(Instant.now)))
   def addVideoGalleryForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
+      "project_id"      ->  nonEmptyText,
+      "sub_project_id"  ->  nonEmptyText,
       "is_video"        ->  ignored(false),
       "URL"             ->  nonEmptyText,
       "title"           ->  nonEmptyText,
       "created_at"      ->  ignored(Instant.now)))
   def addPerspectiveAndFloorPlanForm = Form(tuple(
-      "project_id"      ->  of[UUID],
-      "sub_project_id"  ->  of[UUID],
+      "project_id"      ->  nonEmptyText,
+      "sub_project_id"  ->  nonEmptyText,
       "title"           ->  nonEmptyText,
       "created_at"      ->  ignored(Instant.now)))
   def addProjectForm = Form(mapping(

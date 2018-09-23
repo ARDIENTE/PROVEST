@@ -1,6 +1,7 @@
 package models.service
 
 import javax.inject.{ Inject, Singleton }
+import java.io.File
 import java.util.UUID
 import scala.concurrent.{ ExecutionContext, Future }
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
@@ -108,27 +109,27 @@ class MainService @Inject()(
       exists <- subProjectRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) subProjectRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
 
   def removeSocialMedia[T <: UUID](parms: T): Future[Int] =
     for {
-      exists <- subProjectRepo.exists(parms)
+      exists <- socialMediaRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) socialMediaRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
 
   def removeSalesAndMarketing[T <: UUID](parms: T): Future[Int] =
     for {
-      exists <- subProjectRepo.exists(parms)
+      exists <- salesAndMarketingRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) salesAndMarketingRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
@@ -138,47 +139,63 @@ class MainService @Inject()(
       exists <- subProjectRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) subProjectRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
 
   def removePerspectiveAndFloorPlan[T <: UUID](parms: T): Future[Int] =
     for {
-      exists <- subProjectRepo.exists(parms)
+      exists <- perspectiveAndFloorPlanRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) perspectiveAndFloorPlanRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
 
   def removePhotoAndVideoGallery[T <: UUID](parms: T): Future[Int] =
     for {
-      exists <- subProjectRepo.exists(parms)
+      exists <- photoAndVideoGalleryRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) photoAndVideoGalleryRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
 
   def removeOverView[T <: UUID](parms: T): Future[Int] =
     for {
-      exists <- subProjectRepo.exists(parms)
+      exists <- overViewRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) overViewRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
 
   def removeLocationAndVicinity[T <: UUID](parms: T): Future[Int] =
     for {
-      exists <- subProjectRepo.exists(parms)
+      exists <- locationAndVicinityRepo.exists(parms)
+
+      getDetails <- {
+        if (exists) {
+          locationAndVicinityRepo
+            .find(parms)
+            .map {
+              case data: Option[LocationAndVicinity] =>
+                val path: String = data.map(_.imagePath).getOrElse(null)
+
+                deleteFilePath(path)
+
+              case _ => false
+            }
+        }
+        else Future.successful(false)
+      }
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (getDetails) subProjectRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
@@ -188,47 +205,62 @@ class MainService @Inject()(
       exists <- subProjectRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) subProjectRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
 
   def removeContactProject[T <: UUID](parms: T): Future[Int] =
     for {
-      exists <- subProjectRepo.exists(parms)
+      exists <- contactProjectRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) contactProjectRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
 
   def removeConstructionUpdate[T <: UUID](parms: T): Future[Int] =
     for {
-      exists <- subProjectRepo.exists(parms)
+      exists <- constructionUpdateRepo.exists(parms)
+
+      getDetails <- {
+        if (exists) {
+          constructionUpdateRepo
+            .find(parms)
+            .map {
+              case data: Option[ConstructionUpdate] =>
+                val path: String = data.map(_.imagePath).getOrElse(null)
+                deleteFilePath(path)
+
+              case _ => false
+            }
+        }
+        else Future.successful(false)
+      }
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (getDetails) constructionUpdateRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
 
-  def removeAccount[T <: UUID](parms: T): Future[Int] =
+  def removeAccount[T <: String](parms: T): Future[Int] =
     for {
-      exists <- subProjectRepo.exists(parms)
+      exists <- accountRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) accountRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
 
   def removeAmenitiesAndFacility[T <: UUID](parms: T): Future[Int] =
     for {
-      exists <- subProjectRepo.exists(parms)
+      exists <- amenitiesAndFacilityRepo.exists(parms)
 
       delete <- {
-        if(!exists) subProjectRepo.delete(parms)
+        if (exists) amenitiesAndFacilityRepo.delete(parms)
         else Future.successful(0)
       }
     } yield delete
@@ -239,7 +271,7 @@ class MainService @Inject()(
       exists <- subProjectRepo.exists(parms.id)
 
       add <- {
-        if(!exists) subProjectRepo.add(parms)
+        if (!exists) subProjectRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -249,7 +281,7 @@ class MainService @Inject()(
       exists <- socialMediaRepo.exists(parms.id)
 
       add <- {
-        if(!exists) socialMediaRepo.add(parms)
+        if (!exists) socialMediaRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -259,7 +291,7 @@ class MainService @Inject()(
       exists <- salesAndMarketingRepo.exists(parms.id)
 
       add <- {
-        if(!exists) salesAndMarketingRepo.add(parms)
+        if (!exists) salesAndMarketingRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -269,7 +301,7 @@ class MainService @Inject()(
       exists <- projectRepo.exists(parms.id)
 
       add <- {
-        if(!exists) projectRepo.add(parms)
+        if (!exists) projectRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -279,7 +311,7 @@ class MainService @Inject()(
       exists <- perspectiveAndFloorPlanRepo.exists(parms.id)
 
       add <- {
-        if(!exists) perspectiveAndFloorPlanRepo.add(parms)
+        if (!exists) perspectiveAndFloorPlanRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -290,7 +322,7 @@ class MainService @Inject()(
       exists <- photoAndVideoGalleryRepo.exists(parms.id)
 
       add <- {
-        if(!exists) photoAndVideoGalleryRepo.add(parms)
+        if (!exists) photoAndVideoGalleryRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -300,7 +332,7 @@ class MainService @Inject()(
       exists <- overViewRepo.exists(parms.id)
 
       add <- {
-        if(!exists) overViewRepo.add(parms)
+        if (!exists) overViewRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -310,7 +342,7 @@ class MainService @Inject()(
       exists <- locationAndVicinityRepo.exists(parms.id)
 
       add <- {
-        if(!exists) locationAndVicinityRepo.add(parms)
+        if (!exists) locationAndVicinityRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -320,7 +352,7 @@ class MainService @Inject()(
       exists <- emailRepo.exists(parms.id)
 
       add <- {
-        if(!exists) emailRepo.add(parms)
+        if (!exists) emailRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -330,7 +362,7 @@ class MainService @Inject()(
       exists <- contactProjectRepo.exists(parms.id)
 
       add <- {
-        if(!exists) contactProjectRepo.add(parms)
+        if (!exists) contactProjectRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -340,7 +372,7 @@ class MainService @Inject()(
       exists <- constructionUpdateRepo.exists(parms.id)
 
       add <- {
-        if(!exists) constructionUpdateRepo.add(parms)
+        if (!exists) constructionUpdateRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -350,7 +382,7 @@ class MainService @Inject()(
       exists <- accountRepo.exists(parms.accountName)
 
       add <- {
-        if(!exists) accountRepo.add(parms)
+        if (!exists) accountRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
@@ -363,8 +395,23 @@ class MainService @Inject()(
       exists <- amenitiesAndFacilityRepo.exists(parms.id)
 
       add <- {
-        if(!exists) amenitiesAndFacilityRepo.add(parms)
+        if (!exists) amenitiesAndFacilityRepo.add(parms)
         else Future.successful(0)
       }
     } yield add
+
+  def findLocationAndVicinity(id: UUID): Future[Option[LocationAndVicinity]] = 
+    locationAndVicinityRepo.find(id)
+
+  def deleteFilePath(url: String): Boolean = {
+    try {
+      if (url == null)  
+        false
+
+      else 
+        new File(url).delete  
+    } catch {
+      case _: Exception => false
+    }
+  }
 }

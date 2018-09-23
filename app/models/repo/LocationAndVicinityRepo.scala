@@ -31,8 +31,8 @@ class LocationAndVicinityRepo @Inject()(
   def getByIDs(projectID: UUID, subProjectID: UUID): Future[Seq[LocationAndVicinity]] =
     db.run(dao.Query.filter(r => r.projectID === projectID && r.subProjectID === subProjectID).result)
 
-  def find(id: UUID): OptionT[Future, LocationAndVicinity] =
-    OptionT(db.run(dao.Query(id).result.headOption))
+  def find(id: UUID): Future[Option[LocationAndVicinity]] =
+    db.run(dao.Query(id).result.headOption)
 
   def add(params: LocationAndVicinity): Future[Int] =
     db.run(dao.Query += params)

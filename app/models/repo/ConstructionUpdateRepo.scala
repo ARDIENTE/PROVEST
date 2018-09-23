@@ -31,8 +31,8 @@ class ConstructionUpdateRepo @Inject()(
   def getByIDs(projectID: UUID, subProjectID: UUID): Future[Seq[ConstructionUpdate]] =
     db.run(dao.Query.filter(r => r.projectID === projectID && r.subProjectID === subProjectID).result)
 
-  def find(id: UUID): OptionT[Future, ConstructionUpdate] =
-    OptionT(db.run(dao.Query(id).result.headOption))
+  def find(id: UUID): Future[Option[ConstructionUpdate]] =
+    db.run(dao.Query(id).result.headOption)
 
   def add(params: ConstructionUpdate): Future[Int] =
     db.run(dao.Query += params)

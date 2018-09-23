@@ -5,3 +5,5 @@ createdb --encoding=UTF8 --owner=provest provest
 # gem sass version 
 sass-3.4.25
 
+#use java 1.8 not permanently on your system.
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`

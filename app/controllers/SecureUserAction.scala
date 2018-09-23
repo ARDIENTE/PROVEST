@@ -15,6 +15,7 @@ object SecureUserAction extends ActionBuilder[Request] {
         // Future.successful(Forbidden("Dude, you’re not logged in."))
         Future.successful(Redirect(routes.UserAuth0Controller.forbidden))
       }
+      
       case Some(u) => {
         block(request)
       }

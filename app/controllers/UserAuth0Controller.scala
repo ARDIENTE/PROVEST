@@ -187,7 +187,13 @@ class UserAuth0Controller @Inject() (
               path.map { case (stat, url) =>
                 if (stat.contains("Done"))
                   service.createPerspectiveAndFloorPlan(
-                    PerspectiveAndFloorPlan(UUID.randomUUID, a, b, url, c, d))
+                    PerspectiveAndFloorPlan(
+                      UUID.randomUUID, 
+                      UUID.fromString(a), 
+                      UUID.fromString(b), 
+                      url, 
+                      c, 
+                      d))
                 else
                   Future.successful(0)
               }}
@@ -214,7 +220,14 @@ class UserAuth0Controller @Inject() (
               path.map { case (stat, url) =>
                 if (stat.contains("Done"))
                   service.createPhotoAndVideoGallery(
-                    PhotoAndVideoGallery(UUID.randomUUID, a, b, c, url, d, e))
+                    PhotoAndVideoGallery(
+                      UUID.randomUUID, 
+                      UUID.fromString(a), 
+                      UUID.fromString(b), 
+                      c, 
+                      url, 
+                      d, 
+                      e))
                 else
                   Future.successful(0)
               }}
@@ -235,8 +248,15 @@ class UserAuth0Controller @Inject() (
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d, e, f) =>
         service
-          .createPhotoAndVideoGallery(PhotoAndVideoGallery(UUID.randomUUID, a, b, c, d, e, f))
-          .map { result =>
+          .createPhotoAndVideoGallery(PhotoAndVideoGallery(
+            UUID.randomUUID, 
+            UUID.fromString(a), 
+            UUID.fromString(b), 
+            c, 
+            d, 
+            e, 
+            f
+          )).map { result =>
             if (result == 0)
               Redirect(routes.UserAuth0Controller.main)
             else
@@ -250,8 +270,17 @@ class UserAuth0Controller @Inject() (
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d, e, f, g, h) =>
         service
-          .createOverView(OverView(UUID.randomUUID, a, b, c, d, e, f, g, h))
-          .map { result =>
+          .createOverView(OverView(
+            UUID.randomUUID, 
+            UUID.fromString(a), 
+            UUID.fromString(b), 
+            c, 
+            d, 
+            e, 
+            f, 
+            g, 
+            h
+          )).map { result =>
             if (result == 0)
               Redirect(routes.UserAuth0Controller.main)
             else
@@ -280,8 +309,15 @@ class UserAuth0Controller @Inject() (
       badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
       { case (a, b, c, d, e, f) =>
         service
-          .createContactProject(ContactProject(UUID.randomUUID, a, b, c, d, e, f))
-          .map { result =>
+          .createContactProject(ContactProject(
+            UUID.randomUUID, 
+            UUID.fromString(a), 
+            UUID.fromString(b), 
+            c, 
+            d, 
+            e, 
+            f
+          )).map { result =>
             if (result == 0)
               Redirect(routes.UserAuth0Controller.main)
             else
@@ -301,7 +337,13 @@ class UserAuth0Controller @Inject() (
               path.map { case (stat, url) =>
                 if (stat.contains("Done"))
                   service.createConstructionUpdate(
-                    ConstructionUpdate(UUID.randomUUID, a, b, url, c, d))
+                    ConstructionUpdate(
+                      UUID.randomUUID, 
+                      UUID.fromString(a), 
+                      UUID.fromString(b), 
+                      url, 
+                      c, 
+                      d))
                 else
                   Future.successful(0)
               }}
@@ -328,7 +370,13 @@ class UserAuth0Controller @Inject() (
               path.map { case (status, url) =>
                 if (status.contains("Done"))
                   service.createLocationAndVicinity(
-                    LocationAndVicinity(UUID.randomUUID,a, b, url, c, d))
+                    LocationAndVicinity(
+                      UUID.randomUUID,
+                      UUID.fromString(a),
+                      UUID.fromString(b),
+                      url,
+                      c,
+                      d))
                 else
                   Future.successful(0)
               }}
@@ -355,7 +403,14 @@ class UserAuth0Controller @Inject() (
               path.map { case (status, url) =>
                 if (status.contains("Done"))
                   service.createAmenitiesAndFacility(
-                      AmenitiesAndFacility(UUID.randomUUID, a, b, url, c, d, e))
+                      AmenitiesAndFacility(
+                        UUID.randomUUID, 
+                        UUID.fromString(a), 
+                        UUID.fromString(b), 
+                        url, 
+                        c, 
+                        d, 
+                        e))
                 else
                   Future.successful(0)
               }}
