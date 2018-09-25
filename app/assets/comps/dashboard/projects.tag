@@ -1,4 +1,4 @@
-<features>
+<Projects>
   <div class="container">
 
     <h1 class="mt-4 mb-3">Portfolio 3
@@ -112,7 +112,7 @@
     helper = window.Helpers.factory()
 
     this.on('mount', function() {
-      helper.setTitle({ title: 'Features' })
+      helper.setTitle({ title: 'Projects' })
     })
   </script>
-</features>
+</Projects>

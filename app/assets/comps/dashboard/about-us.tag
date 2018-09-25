@@ -1,14 +1,14 @@
 <about-us>
   <div class="container">
     <h1 class="mt-4 mb-3">About Us
-      <small>We Build Churva</small>
+      <small>We Build With You in Mind</small>
     </h1>
 
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="/dashboard">Home</a>
       </li>
-      <li class="breadcrumb-item active">We Build Churva</li>
+      <li class="breadcrumb-item active">We Build With You in Mind</li>
     </ol>
 
     <img class="img-fluid rounded mb-4" src="http://placehold.it/1200x300" alt="">

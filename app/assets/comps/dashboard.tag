@@ -1,29 +1,29 @@
 <dashboard>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
+      <!-- <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-      </ol>
+      </ol> -->
       <div class="carousel-inner" role="listbox">
-        <div class="carousel-item active" style="background-image: url('http://placehold.it/1900x1080')">
+        <div class="carousel-item active" style="background-image: url('http://www.cebulandmasters.com/wp-content/uploads/2017/09/HERO-BANNER_PHASE-2_1680x768px-1.jpg')">
           <div class="carousel-caption d-none d-md-block">
-            <h3>First Slide</h3>
-            <p>This is a description for the first slide.</p>
+            <!-- <h3>First Slide</h3> -->
+            <!-- <p>This is a description for the first slide.</p> -->
           </div>
         </div>
-        <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
+        <div class="carousel-item" style="background-image: url('http://www.cebulandmasters.com/wp-content/uploads/2018/08/52development.jpg')">
           <div class="carousel-caption d-none d-md-block">
-            <h3>Second Slide</h3>
-            <p>This is a description for the second slide.</p>
+            <!-- <h3>Second Slide</h3> -->
+            <!-- <p>This is a description for the second slide.</p> -->
           </div>
         </div>
-        <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
+        <!-- <div class="carousel-item" style="background-image: url('')">
           <div class="carousel-caption d-none d-md-block">
             <h3>Third Slide</h3>
             <p>This is a description for the third slide.</p>
           </div>
-        </div>
+        </div> -->
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
