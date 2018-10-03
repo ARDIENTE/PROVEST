@@ -586,24 +586,23 @@ class UserAuth0Controller @Inject() (
     Future.successful(Ok(views.html.error()))
   }
 
-  private def uploadImage[A >: String](
-      folder: A,
-      request: Request[MultipartFormData[TemporaryFile]]):
-    Future[Seq[(A, A)]] = {
-      Future.successful {
-        if (!request.body.files.isEmpty)
-          request.body.files.map { file =>
-            val random = Random.alphanumeric.take(5).mkString("")
-            val diskPath = s"public/images/${folder}/${random + file.filename}"
-            val publicPath = s"../assets/images/${folder}/${random + file.filename}"
-            try {
-              file.ref.moveTo(new File(diskPath))
-              ("Done", publicPath)
-            } catch {
-              case _: Exception => ("Error", file.filename)
-            }
+  def uploadImage[A >: String](folder: A, request: Request[MultipartFormData[TemporaryFile]]):
+  Future[Seq[(A, A)]] = {
+    Future.successful {
+      if (!request.body.files.isEmpty)
+        request.body.files.map { file =>
+          val filename = file.filename
+          val diskPath = s"public/images/${folder}/${filename}"
+          
+
+          try {
+            file.ref.moveTo(new File(diskPath))
+            ("Done", filename)
+          } catch {
+            case _: Exception => ("Error", filename)
           }
-        else Seq.empty[(A, A)]
-      }
+        }
+      else Seq.empty[(A, A)]
     }
+  }
 }
