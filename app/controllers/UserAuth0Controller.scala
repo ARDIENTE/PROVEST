@@ -271,8 +271,10 @@ class UserAuth0Controller @Inject() (
           )).map { result =>
             if (result == 0)
               Redirect(routes.UserAuth0Controller.main)
+                .flashing("error" -> "Error or Some files has failed.")
             else
               Redirect(routes.UserAuth0Controller.main)
+                .flashing("info" -> "Done uploading.")
           }
       })
   }
@@ -283,9 +285,9 @@ class UserAuth0Controller @Inject() (
       { case (a, b, c, d, e, f, g, h) =>
         service
           .createOverView(OverView(
-            UUID.randomUUID, 
-            UUID.fromString(a), 
-            UUID.fromString(b), 
+            UUID.randomUUID,
+            UUID.fromString(a),
+            UUID.fromString(b),
             c, 
             d, 
             e, 
@@ -295,8 +297,10 @@ class UserAuth0Controller @Inject() (
           )).map { result =>
             if (result == 0)
               Redirect(routes.UserAuth0Controller.main)
+                .flashing("error" -> "Error or Some files has failed.")
             else
               Redirect(routes.UserAuth0Controller.main)
+                .flashing("info" -> "Done uploading.")
           }
       })
   }
@@ -310,8 +314,10 @@ class UserAuth0Controller @Inject() (
           .map { result =>
             if (result == 0)
               Redirect(routes.UserAuth0Controller.main)
+                .flashing("error" -> "Error or Some files has failed.")
             else
               Redirect(routes.UserAuth0Controller.main)
+                .flashing("info" -> "Done uploading.")
           }
       })
   }
@@ -332,8 +338,10 @@ class UserAuth0Controller @Inject() (
           )).map { result =>
             if (result == 0)
               Redirect(routes.UserAuth0Controller.main)
+                .flashing("error" -> "Error or Some files has failed.")
             else
               Redirect(routes.UserAuth0Controller.main)
+                .flashing("info" -> "Done uploading.")
           }
       })
   }
@@ -592,6 +600,264 @@ class UserAuth0Controller @Inject() (
           Redirect(routes.UserAuth0Controller.main)
               .flashing("info" -> "Success.")
       }
+  }
+
+  def updateSocialMedia(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.addSocialMediaForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { result =>
+        service
+          .updateSocialMedia(new SocialMedia(id, result.title, result.url))
+          .map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
+  }
+
+  def updateSalesAndMarketing(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.addSalesAndMarketingForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { result =>
+        service
+          .updateSalesAndMarketing(new SalesAndMarketing(id, result.title, result.number, result.createdAt))
+          .map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
+  }
+
+  def updateSubProject(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.addSubProjectForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { result =>
+        service
+          .updateSubProject(new SubProject(id, result.name))
+          .map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
+  }
+
+  def updateProject(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.addProjectForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { result =>
+        service
+          .updateProject(new Project(id, result.name))
+          .map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
+  }
+
+  def updatePerspectiveAndFloorPlan(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.updatePerspectiveAndFloorPlanForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c, d, e) =>
+        service
+          .updatePerspectiveAndFloorPlan(
+            new PerspectiveAndFloorPlan(
+              id, 
+              UUID.fromString(a), 
+              UUID.fromString(b), 
+              c, 
+              d, 
+              e.toInstant()
+            )
+          ).map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
+  }
+
+  def updatePhotoAndVideoGallery(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.updateVideoGalleryForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c, d, e, f) =>
+        service
+        .updatePhotoAndVideoGallery(
+          new PhotoAndVideoGallery(
+            id, 
+            UUID.fromString(a), 
+            UUID.fromString(b), 
+            c, 
+            d, 
+            e, 
+            f.toInstant()
+          )
+        ).map { count =>
+          if (count == 0)
+            Redirect(routes.UserAuth0Controller.main)
+                .flashing("error" -> "Something went wrong.")
+          else
+            Redirect(routes.UserAuth0Controller.main)
+                .flashing("info" -> "Success.")
+        }
+      })
+  }
+
+  def updateOverView(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.updateOverViewForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c, d, e, f, g, h) =>
+        service
+          .updateOverView(new OverView(
+            id, 
+            UUID.fromString(a), 
+            UUID.fromString(b), 
+            c, 
+            d, 
+            e, 
+            f, 
+            g, 
+            h.toInstant()
+          )).map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
+  }
+
+  def updateEmail(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.updateEmailForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c) =>
+        service
+          .updateEmail(new Email(id, a, b, c.toInstant()))
+          .map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
+  }
+
+  def updateContactProject(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.updateContactProjectForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c, d, e, f) =>
+        service
+          .updateContactProject(
+            new ContactProject(
+              id, 
+              UUID.fromString(a), 
+              UUID.fromString(b), 
+              c, 
+              d, 
+              e, 
+              f.toInstant()
+            )
+          ).map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
+  }
+
+  def updateConstructionUpdate(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.updateConstructionUpdateForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c, d, e) =>
+        service
+          .updateConstructionUpdate(new ConstructionUpdate(
+            id, 
+            UUID.fromString(a), 
+            UUID.fromString(b), 
+            c, 
+            d, 
+            e.toInstant()
+          )).map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
+  }
+
+  def updateLocationAndVicinity(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.updateLocationAndVicinityForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c, d, e) =>
+        service
+          .updateLocationAndVicinity(new LocationAndVicinity(
+            id, 
+            UUID.fromString(a), 
+            UUID.fromString(b), 
+            c, 
+            d, 
+            e.toInstant()
+          )).map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
+  }
+
+  def updateAmenitiesAndFacility(id: UUID) = SecureUserAction.async { implicit request => 
+    FormValidations.updateAmenitiesAndFacilityForm.bindFromRequest.fold(
+      badRequest => Future.successful(Redirect(routes.UserAuth0Controller.main)),
+      { case (a, b, c, d, e, f) =>
+        service
+          .updateAmenitiesAndFacility(new AmenitiesAndFacility(
+            id, 
+            UUID.fromString(a), 
+            UUID.fromString(b), 
+            c, 
+            d, 
+            e, 
+            f.toInstant()
+          )).map { count =>
+            if (count == 0)
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("error" -> "Something went wrong.")
+            else
+              Redirect(routes.UserAuth0Controller.main)
+                  .flashing("info" -> "Success.")
+          }
+      })
   }
 
   def forbidden = Action.async { implicit request =>

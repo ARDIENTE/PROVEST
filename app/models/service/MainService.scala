@@ -414,4 +414,125 @@ class MainService @Inject()(
       case _: Exception => false
     }
   }
+
+  def updateSocialMedia(params: SocialMedia): Future[Int] = 
+    for {
+      exists <- socialMediaRepo.exists(params.id)
+
+      update <- {
+        if (!exists) socialMediaRepo.update(params)
+        else Future.successful(0)
+      }
+    } yield update
+
+  def updateSalesAndMarketing(params: SalesAndMarketing): Future[Int] = 
+      for {
+        exists <- salesAndMarketingRepo.exists(params.id)
+
+        update <- {
+          if (!exists) salesAndMarketingRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
+  def updateSubProject(params: SubProject): Future[Int] = 
+      for {
+        exists <- subProjectRepo.exists(params.id)
+
+        update <- {
+          if (!exists) subProjectRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
+  def updateProject(params: Project): Future[Int] = 
+      for {
+        exists <- projectRepo.exists(params.id)
+
+        update <- {
+          if (!exists) projectRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
+  def updatePerspectiveAndFloorPlan(params: PerspectiveAndFloorPlan): Future[Int] = 
+      for {
+        exists <- perspectiveAndFloorPlanRepo.exists(params.id)
+
+        update <- {
+          if (!exists) perspectiveAndFloorPlanRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
+  def updatePhotoAndVideoGallery(params: PhotoAndVideoGallery): Future[Int] = 
+      for {
+        exists <- photoAndVideoGalleryRepo.exists(params.id)
+
+        update <- {
+          if (!exists) photoAndVideoGalleryRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
+  def updateOverView(params: OverView): Future[Int] = 
+      for {
+        exists <- overViewRepo.exists(params.id)
+
+        update <- {
+          if (!exists) overViewRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
+  def updateEmail(params: Email): Future[Int] = 
+      for {
+        exists <- emailRepo.exists(params.id)
+
+        update <- {
+          if (!exists) emailRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
+  def updateContactProject(params: ContactProject): Future[Int] = 
+      for {
+        exists <- contactProjectRepo.exists(params.id)
+
+        update <- {
+          if (!exists) contactProjectRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
+  def updateConstructionUpdate(params: ConstructionUpdate): Future[Int] = 
+      for {
+        exists <- constructionUpdateRepo.exists(params.id)
+
+        update <- {
+          if (!exists) constructionUpdateRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
+  def updateLocationAndVicinity(params: LocationAndVicinity): Future[Int] = 
+      for {
+        exists <- locationAndVicinityRepo.exists(params.id)
+
+        update <- {
+          if (!exists) locationAndVicinityRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
+  def updateAmenitiesAndFacility(params: AmenitiesAndFacility): Future[Int] = 
+      for {
+        exists <- amenitiesAndFacilityRepo.exists(params.id)
+
+        update <- {
+          if (!exists) amenitiesAndFacilityRepo.update(params)
+          else Future.successful(0)
+        }
+      } yield update
+
 }
