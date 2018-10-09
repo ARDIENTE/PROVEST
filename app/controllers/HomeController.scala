@@ -43,7 +43,7 @@ class HomeController @Inject() (
   (Account.apply)(Account.unapply))
 
   private val loginForm = Form(mapping(
-    "account_name"      ->  nonEmptyText
+    "username"      ->  nonEmptyText
       .verifying(verifyShortText,   char => lengthIsGreaterThanNCharacters(char, 2))
       .verifying(verifyLongText,    char => lengthIsLessThanNCharacters(char, 20)),
     "password"          ->  nonEmptyText
@@ -84,6 +84,7 @@ class HomeController @Inject() (
   def loginUser = Action.async { implicit request =>
     loginForm.bindFromRequest.fold(
       formWithErrors => {
+        println(formWithErrors)
         Future.successful(
           Ok(views.html.login(loginForm)
         ))
@@ -93,7 +94,7 @@ class HomeController @Inject() (
           .checkAccount(login.accountName, login.password)
           .map(
             if(_)
-              Redirect(routes.UserAuth0Controller.main())
+              Redirect(routes.UserAuth0Controller.dashboard())
                 .flashing("info" -> "You are logged in.")
                 .withSession(utils.UserAuth.SESSION_USERNAME_KEY -> login.accountName)
             else
