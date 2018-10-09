@@ -27,6 +27,18 @@ class UserAuth0Controller @Inject() (
   implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport {
 
+  def dashboard = Action { implicit req =>
+    Ok(views.html.auth.dashboard())
+  }
+
+  def gallery = Action { implicit req =>
+    Ok(views.html.auth.gallery())
+  }
+
+  def posts = Action { implicit req =>
+    Ok(views.html.auth.posts())
+  }
+
   def main = SecureUserAction.async { implicit request =>
     Future.successful(Ok(views.html.main(routes.HomeController.logout)))
   }

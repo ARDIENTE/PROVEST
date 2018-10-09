@@ -1,13 +1,6 @@
-@()(
-  implicit header: RequestHeader,
-  messages: Messages,
-  wja: WebJarAssets
-)
+@()(implicit header: RequestHeader, messages: Messages, wja: WebJarAssets)
 
-@helper.base {
-  <link href="@routes.Assets.at("styles/dashboard.css")" rel="stylesheet">
-  <link href="@routes.Assets.at("styles/main.css")" rel="stylesheet">
-} {
+@template.page("Dashboard - Provest")() {
   <div>
     <header></header>
 

@@ -1,107 +1,137 @@
-:root {
-  --input-padding-x: .75rem;
-  --input-padding-y: .75rem;
+@import "settings";
+
+
+@include foundation-global-styles;
+@include foundation-flex-grid;
+@include foundation-flex-classes;
+@include foundation-typography;
+@include foundation-forms;
+@include foundation-button;
+@include foundation-accordion;
+@include foundation-accordion-menu;
+@include foundation-badge;
+@include foundation-breadcrumbs;
+@include foundation-button-group;
+@include foundation-callout;
+@include foundation-close-button;
+@include foundation-menu;
+@include foundation-menu-icon;
+@include foundation-drilldown-menu;
+@include foundation-dropdown;
+@include foundation-dropdown-menu;
+@include foundation-flex-video;
+@include foundation-label;
+@include foundation-media-object;
+@include foundation-off-canvas;
+@include foundation-orbit;
+@include foundation-pagination;
+@include foundation-progress-bar;
+@include foundation-slider;
+@include foundation-sticky;
+@include foundation-reveal;
+@include foundation-switch;
+@include foundation-table;
+@include foundation-tabs;
+@include foundation-thumbnail;
+@include foundation-title-bar;
+@include foundation-tooltip;
+@include foundation-top-bar;
+@include foundation-visibility-classes;
+@include foundation-float-classes;
+
+
+@mixin prefix($property, $value) {
+   @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
+      #{$prefix}#{$property}: $value;
+   }
 }
 
-html,
-body {
+
+html, body, #wrapper, aside, main {
   height: 100%;
 }
 
-body {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  background-image: url('../images/default/bg-signup-2.jpg');
-  background-color: #000;
-  background-repeat: no-repeat;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-position: center;
 
-  @media only screen and (max-width: 1395px) {
-    background-size: auto;
+.login-form {
+  margin-top: 5rem;
+}
+
+#wrapper {
+  aside {
+    width: 250px;
+    background-color: $primary;
+    padding: 0;
+    header {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    h3 {
+      border-bottom: 1px solid $dark-blue;
+      font-size: .8rem;
+      color: $light-gray;
+      padding-left: 1rem;
+    }
+    .menu {
+      li {
+        padding: .4rem 0;
+        a { 
+          color: $white; 
+          i { margin-right: 1rem; }
+        }
+      }
+    }
   }
-
-  @media only screen and (min-width: 1395px) {
-    background-size: cover;
-
+  main {
+    padding: 0;
+    > header {
+      border-bottom: 1px solid $dark-blue;
+      padding: .5rem 1.5rem;
+      box-shadow: 1px 1px 1px 1px $light-gray;
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0;
+        color: $primary;
+      }
+    }
+    .content {
+      margin-top: 4rem;
+      header {
+        h2 { font-size: 1.2rem; }
+        p { font-size: .9rem; }
+      }
+    }
   }
 }
 
 
-.form-signin {
-  width: 100%;
-  max-width: 420px;
-  padding: 15px;
-  margin: auto;
+/* ---------------------------------------------------
+  reveal
+--------------------------------------------------- */
+.is-reveal-open #wrapper {
+  @include prefix(filter, blur(5px));
+  filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='5');
+  @include prefix(transition, all .5s ease);
 }
 
-.form-label-group {
-  position: relative;
-  margin-bottom: 1rem;
-}
-
-.form-label-group > input,
-.form-label-group > label {
-  padding: var(--input-padding-y) var(--input-padding-x);
-}
-
-.form-label-group > label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  margin-bottom: 0; /* Override default `<label>` margin */
-  line-height: 1.5;
-  color: #495057;
-  border: 1px solid transparent;
-  border-radius: .25rem;
-  transition: all .1s ease-in-out;
-}
-
-.form-label-group input::-webkit-input-placeholder {
-  color: transparent;
-}
-
-.form-label-group input:-ms-input-placeholder {
-  color: transparent;
-}
-
-.form-label-group input::-ms-input-placeholder {
-  color: transparent;
-}
-
-.form-label-group input::-moz-placeholder {
-  color: transparent;
-}
-
-.form-label-group input::placeholder {
-  color: transparent;
-}
-
-.form-label-group input:not(:placeholder-shown) {
-  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
-  padding-bottom: calc(var(--input-padding-y) / 3);
-}
-
-.form-label-group input:not(:placeholder-shown) ~ label {
-  padding-top: calc(var(--input-padding-y) / 3);
-  padding-bottom: calc(var(--input-padding-y) / 3);
-  font-size: 12px;
-  color: #777;
-}
-
-#register-link {
-  color: #fff;
-}
-
-.form-label-group, #btn-sign-up, #btn-sign-in {
-  opacity: 0.8;
-}
-
-.text-muted {
-  color: #fff9!important;
+.reveal {
+  outline: none;
+  margin-bottom: 40px;
+  padding-top: 1rem;
+  border: 1px solid $medium-gray;
+  header {
+    text-align: center;
+    h3 {
+      font-size: 1rem;
+    }
+  }
+  .close-button {
+    color: $medium-gray!important;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 1rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 }

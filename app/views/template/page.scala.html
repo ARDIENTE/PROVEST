@@ -1,0 +1,19 @@
+@(title: String)(head: Html = Html(""))(content: Html)(tail: Html = Html(""))(implicit request: RequestHeader, message: Messages, wja: WebJarAssets)
+
+
+@template.base(title) {
+  <link href="@{routes.Assets.at("styles/main.css")}" rel="stylesheet">
+  @head
+} {
+  @content
+  <script src="@{routes.WebJarAssets.at(wja.fullPath("jquery", "jquery.min.js"))}"></script>
+  <script src="@{routes.WebJarAssets.at(wja.locate("foundation.min.js"))}"></script>
+  <script src="@{routes.WebJarAssets.at(wja.locate("riot.min.js"))}"></script>
+  <script src="@{routes.WebJarAssets.at(wja.locate("lodash.min.js"))}"></script>
+  <script>
+    ( function(){
+      $(document).foundation()
+    }())
+  </script>
+  @tail
+}

@@ -1,13 +1,6 @@
-@()(
-    implicit header: RequestHeader,
-    flash: Flash,
-    messages: Messages,
-    wja: WebJarAssets
-  )
+@()(implicit header: RequestHeader, flash: Flash, messages: Messages, wja: WebJarAssets)
 
-@helper.base {
-  <link href="@routes.Assets.at("styles/error.css")" rel="stylesheet">
-} {
+@template.page("Error - Provest")() {
   <div class="container">
     <h4 class="alert-heading">403 - FORBIDDEN
       <!-- <i class="fa fa-cog fa-spin fa-2x fa-fw" aria-hidden="true"></i> -->

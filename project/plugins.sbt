@@ -15,8 +15,6 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-mocha" % "1.1.0")
 
 addSbtPlugin("com.ejisan.sbt" % "sbt-riotjs" % "2.2.4")
 
-resolvers += Resolver.url("GitHub repository", url("http://shaggyyeti.github.io/releases"))(Resolver.ivyStylePatterns)
-
-addSbtPlugin("default" % "sbt-sass" % "0.1.9")
+addSbtPlugin("org.irundaia.sbt" % "sbt-sassify" % "1.4.9")
 
 addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.3")

@@ -1,0 +1,128 @@
+@()(implicit request:RequestHeader, flash: Flash, messages: Messages, wja: WebJarAssets)
+
+@template.auth.page("Gallery - Provest", "Gallery") {
+<section class="small-12 columns">
+  <header>
+    <h2>
+      <i class="icon-images"></i>
+      Gallery
+    </h2>
+    <p>Our best robots are currently generating your trade wallet. For the meantime, please enjoy other services of Provest</p>
+  </header>
+  <div class="row small-up-3 align-middle">
+    <div class="columns">
+      <a href="javascript:;" class="open-image">
+        <img 
+          class="thumbnail" 
+          src="https://cdn.lynda.com/course/461914/461914-636247549815005980-16x9.jpg" 
+          alt="Sample Photo 1">
+      </a>
+    </div>
+    <div class="columns">
+      <a href="javascript:;" class="open-image">
+        <img 
+          class="thumbnail" 
+          src="http://chrismeyerphotography.com/wp-content/uploads/2014/07/CMP-Twilight-Architecture-Real-Estate-011-495x400.jpg" 
+          alt="Sample Photo 2">
+      </a>
+    </div>
+    <div class="columns">
+      <a href="javascript:;" class="open-image">
+        <img 
+          class="thumbnail" 
+          src="https://danziphotography.com/wp-content/uploads/2015/09/Interior1.jpg" 
+          alt="Sample Photo 3">
+      </a>
+    </div>
+    <div class="columns">
+      <a href="javascript:;" class="open-image">
+        <img 
+            class="thumbnail" 
+            src="http://www.realestatephotographerseattle.com/before-after/after.jpg" 
+            alt="Sample Photo 4">
+        </a>
+    </div>
+    <div class="columns">
+      <a href="javascript:;" class="open-image">
+        <img 
+          class="thumbnail" 
+          src="https://improvephotography.com/wp-content/uploads/2016/01/real-estate-photography.jpg" 
+          alt="Sample Photo 5">
+      </a>
+    </div>
+    <div class="columns">
+      <a href="javascript:;" class="open-image">
+        <img 
+          class="thumbnail" 
+          src="https://i.ytimg.com/vi/4tg6FramKTA/maxresdefault.jpg" 
+          alt="Sample Photo 6">
+      </a>
+    </div>
+    <div class="columns">
+      <a href="javascript:;" class="open-image">
+        <img 
+          class="thumbnail" 
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSsHDpE9R0RrY4TUBf7OtKOV9_Ztt2ACuHWGmndyL9I0cCaEVe" 
+          alt="Sample Photo 7">
+      </a>
+    </div>
+    <div class="columns">
+      <a href="javascript:;" class="open-image">
+        <img 
+          class="thumbnail" 
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT79kenLeVIHkCaLlTeuhoKRzwfNw3iBLQnJi1ix4a_GdayaoZz" 
+          alt="Sample Photo 8">
+      </a>
+    </div>
+    <div class="columns">
+      <a href="javascript:;" class="open-image">
+        <img 
+          class="thumbnail" 
+          src="https://www.3wirephotography.com/images/Professional-Real-Estate-Photographer.jpg" 
+          alt="Sample Photo 9">
+      </a>
+    </div>
+  </div>
+  <div class="row align-middle">
+    <div class="columns text-center">
+      <ul class="pagination" role="navigation" aria-label="Pagination">
+        <li class="pagination-previous disabled">Previous <span class="show-for-sr">page</span></li>
+        <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
+        <li><a href="#" aria-label="Page 2">2</a></li>
+        <li><a href="#" aria-label="Page 3">3</a></li>
+        <li><a href="#" aria-label="Page 4">4</a></li>
+        <li class="ellipsis" aria-hidden="true"></li>
+        <li><a href="#" aria-label="Page 12">12</a></li>
+        <li><a href="#" aria-label="Page 13">13</a></li>
+        <li class="pagination-next"><a href="#" aria-label="Next page">Next <span class="show-for-sr">page</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="reveal" id="photoReveal" data-reveal>
+  <header>
+    <h3>Provest - Photo Gallery 1</h3>
+  </header>
+  <div class="row">
+    <div class="columns text-center">
+      <img src="" alt="Provest - Photo">
+    </div>
+  </div>
+  <button class="close-button" data-close aria-label="Close reveal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+} {
+  <script>
+    ( function() {
+      $(".open-image").on("click", function() {
+        var src = $(this).find("img")[0].src,
+            $reveal = $("#photoReveal")
+
+        $reveal.find("img")[0].src = src
+        $reveal.foundation("open")
+      })
+    }())
+  </script>
+}

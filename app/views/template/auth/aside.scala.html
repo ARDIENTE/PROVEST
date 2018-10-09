@@ -1,0 +1,41 @@
+<aside class="shrink columns">
+  <header class="text-center">
+    <img 
+      src="@{routes.Assets.at("images/default/logo1.png")}" 
+      width="150" 
+      alt="Provest Logo">
+  </header>
+  <h3>Main Navigation</h3>
+  <ul class="menu vertical">
+    <li>
+      <a href="@{routes.UserAuth0Controller.dashboard}">
+        <i class="icon-home"></i>
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="@{routes.UserAuth0Controller.posts}">
+        <i class="icon-newspaper"></i>
+        Posts
+      </a>
+    </li>
+    <li>
+      <a href="@{routes.UserAuth0Controller.gallery}">
+        <i class="icon-images"></i>
+        Gallery
+      </a>
+    </li>
+    <li>
+      <a href="">
+        <i class="icon-address-book"></i>
+        Contact Us
+      </a>
+    </li>
+    <li>
+      <a href="@{routes.HomeController.logout}">
+        <i class="icon-exit"></i>
+        Logout
+      </a>
+    </li>
+  </ul>
+</aside>

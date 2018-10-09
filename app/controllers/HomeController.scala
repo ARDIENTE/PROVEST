@@ -56,11 +56,11 @@ class HomeController @Inject() (
   }
 
   def index = Action { implicit request =>
-    Ok(views.html.dashboard())
+    Ok(views.html.index())
   }
 
   def auth = Action { implicit request =>
-    Ok(views.html.auth(loginForm, routes.HomeController.loginUser))
+    Ok(views.html.login(loginForm))
   }
 
   def logout =  SecureUserAction.async { implicit request =>
@@ -85,7 +85,7 @@ class HomeController @Inject() (
     loginForm.bindFromRequest.fold(
       formWithErrors => {
         Future.successful(
-          Ok(views.html.auth(loginForm, routes.HomeController.loginUser)
+          Ok(views.html.login(loginForm)
         ))
       },
       login => {

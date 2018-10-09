@@ -1,0 +1,35 @@
+@(form: Form[utils.UserAuth0])(implicit request:RequestHeader, flash: Flash, messages: Messages, wja: WebJarAssets)
+
+@template.auth.page("Signin - Provest", "", Some(true)) {
+  <form 
+    action="@{routes.HomeController.loginUser}"
+    method="POST"
+    name="loginForm"
+    class="login-form">
+      <div class="row align-center">
+        <div class="small-4 columns">
+          <div class="row">
+            <div class="small-12 columns text-center">
+              <img 
+                src="@{routes.Assets.at("images/default/logo1.png")}" 
+                width="150" 
+                alt="Provest Logo">
+            </div>
+            <div class="small-12 columns">
+              <label for="username">Username
+                <input type="text" name="username" id="username" placeholder="Enter username">
+              </label>
+            </div>
+            <div class="small-12 columns">
+              <label for="password">Password
+                <input type="password" name="password" id="password" placeholder="Enter username">
+              </label>
+            </div>
+            <div class="small-12 columns">
+              <button type="submit" class="button success expanded" name="submit">Login</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </form>
+}()

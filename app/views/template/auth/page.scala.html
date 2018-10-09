@@ -1,0 +1,45 @@
+@(title: String, header: String, isLogin: Option[Boolean] = Some(false))(content: Html)(tail: Html = Html(""))(implicit request: RequestHeader, message: Messages, wja: WebJarAssets)
+
+
+@template.base(title) {
+  <link href="@{routes.Assets.at("styles/auth.css")}" rel="stylesheet">
+} {
+  @if(isLogin.get) {
+    <div id="wrapper">
+      <div class="content">
+        @content
+      </div>
+    </div>
+  } else {
+    <div id="wrapper" class="row expanded">
+      @template.auth.aside()
+      <main class="columns">
+        <header>
+          <h1>@header</h1>
+        </header>
+        <div class="content">
+          <div class="row align-center">
+            <div class="row small-6 columns">
+              <div class="row">
+                @content
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  }
+  
+  <script src="@{routes.WebJarAssets.at(wja.fullPath("jquery", "jquery.min.js"))}"></script>
+  <script src="@{routes.WebJarAssets.at(wja.locate("foundation.js"))}"></script>
+  <script src="@{routes.WebJarAssets.at(wja.locate("riot.min.js"))}"></script>
+  <script src="@{routes.WebJarAssets.at(wja.locate("lodash.min.js"))}"></script>
+  <script>
+    ( function(){
+      $(document).ready(function() {
+        $(document).foundation()
+      })
+    }())
+  </script>
+  @tail
+}

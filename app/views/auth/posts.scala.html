@@ -1,0 +1,25 @@
+@()(implicit request:RequestHeader, flash: Flash, messages: Messages, wja: WebJarAssets)
+
+@template.auth.page("Posts - Provest", "Posts") {
+<section class="small-12 columns">
+  <header>
+    <h2>
+      <i class="icon-home"></i>
+      Posts
+    </h2>
+    <p>Our best robots are currently generating your trade wallet. For the meantime, please enjoy other services of Provest</p>
+  </header>
+  <form action="" method="POST" name="postsForm">
+    <label for="caption">Caption
+      <input type="text" name="caption" placeholder="Caption">
+    </label>
+    <label for="description">Description
+      <textarea name="description" id="description" cols="30" rows="10"></textarea>
+    </label>
+    <label for="photo">Select to upload
+      <input type="file" name="photo" id="photo">
+    </label>
+    <button type="submit" name="submit" class="button success expanded">Upload Photo</button>
+  </form>
+</section>
+}()

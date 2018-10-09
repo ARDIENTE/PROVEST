@@ -1,0 +1,20 @@
+@()(implicit request: RequestHeader, message: Messages, wja: WebJarAssets)
+
+@template.page("Dashboard") {
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/2.0.3/motion-ui.min.css">
+} {
+  <div id="wrapper">
+    @template.topbar()
+    @template.banner()
+    <div class="content">
+      <div class="row align-center">
+        <div class="small-9 columns text-center">
+          <p>
+            We started in Cebu with a vision to provide better homes for the average Filipino worker. Today, with 52 <br>developments in 8 key cities in VisMin, our real estate experience will be spent on continuously being masters of one thing - and that is to serve you.
+          </p>
+        </div>
+      </div>
+    </div>
+    @template.footer()
+  </div>
+} {<script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/2.0.3/motion-ui.min.js"></script>}
